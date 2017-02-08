@@ -2,8 +2,10 @@
 #include <GL\glew.h>
 #include <GL\freeglut.h>
 #include <iostream>
+#include <cmath>
 
 #include "shader.h"
+#include "scene.h"
 
 using namespace std;
 
@@ -14,24 +16,21 @@ void changeViewPort(int w, int h)
 	glViewport(0, 0, w, h);
 }
 
-float vertices[] = { 0, 0, 0,  0, 0.5, 0,  0.5, 0, 0 };
+Scene* scene;
 
 void render()
 {
-	if (basicShader == NULL)
-		return;
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices);
-	glUseProgram(basicShader->getProgramId());
-	glEnableVertexAttribArray(0);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
-	glutSwapBuffers();
-	glUseProgram(0);
+	scene->render();
 }
 
+int lastFrameTime = 0;
 void update()
 {
-	vertices[0] += 0.001;
+	int time = glutGet(GLUT_ELAPSED_TIME);
+	float deltaTime = (time - lastFrameTime) / 1000.0;
+	scene->update(deltaTime);
+	lastFrameTime = time;
+	glutPostRedisplay();
 }
 
 int main(int argc, char* argv[]) {
@@ -46,14 +45,16 @@ int main(int argc, char* argv[]) {
 		glutDisplayFunc(render);
 		glutIdleFunc(update);
 
+		scene = new Scene();
+
+
 		GLenum err = glewInit();
 		if (GLEW_OK != err)
 		{
 			fprintf(stderr, "GLEW error");
 			return 1;
 		}
-		basicShader = new Shader("Shaders/shader_base.vert", "Shaders/shader_base.frag");
-		basicShader->load();
+		scene->init();
 	}
 	catch (std::exception& e)
 	{

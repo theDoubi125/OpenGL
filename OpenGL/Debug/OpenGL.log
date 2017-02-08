@@ -1,4 +1,6 @@
 ﻿  main.cpp
-c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\main.cpp(34): warning C4305: '+=': truncation from 'double' to 'float'
-  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.exe
-  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.h(20): warning C4373: 'Scene::update' : la fonction virtuelle se substitue à 'GameEntity::update', les versions précédentes n'ont pas été substituées lorsque les paramètres ne différaient que par les qualificateurs const/volatile
+  g:\documents\julien\projets\c++\opengl\opengl\src\scene.h(9): note: voir la déclaration de 'GameEntity::update'
+g:\documents\julien\projets\c++\opengl\opengl\src\main.cpp(30): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)
