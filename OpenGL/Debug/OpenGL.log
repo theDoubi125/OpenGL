@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\main.cpp(34): warning C4305: '+=': truncation from 'double' to 'float'
+  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)
