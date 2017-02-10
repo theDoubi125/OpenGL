@@ -47,6 +47,9 @@ public:
 	Entity(const Entity& model);
 	virtual ~Entity();
 
+	virtual void update(float deltaTime);
+	virtual void render() const;
+
 private:
 	Transform m_transform;
 };

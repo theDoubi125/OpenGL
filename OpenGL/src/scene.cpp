@@ -26,7 +26,7 @@ void Scene::init()
 	m_shader->load();
 }
 
-void Scene::update(const float deltaTime)
+void Scene::update(const float &deltaTime)
 {
 	m_time += deltaTime;
 	m_vertices[1] = cos(2 * m_time * PI);

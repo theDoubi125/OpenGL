@@ -1,6 +1,11 @@
-﻿  main.cpp
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.h(20): warning C4373: 'Scene::update' : la fonction virtuelle se substitue à 'GameEntity::update', les versions précédentes n'ont pas été substituées lorsque les paramètres ne différaient que par les qualificateurs const/volatile
-  g:\documents\julien\projets\c++\opengl\opengl\src\scene.h(9): note: voir la déclaration de 'GameEntity::update'
-g:\documents\julien\projets\c++\opengl\opengl\src\main.cpp(34): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)
+﻿  scene.cpp
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  Compiling...
+  main.cpp
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\main.cpp(34): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  entity.cpp
+  Generating Code...
+  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)

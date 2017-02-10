@@ -6,7 +6,7 @@ class GameEntity
 {
 public:
 	virtual void init() = 0;
-	virtual void update(float deltaTime) = 0;
+	virtual void update(const float &deltaTime) = 0;
 	virtual void render() const = 0;
 };
 
@@ -17,7 +17,7 @@ public:
 	Scene(const Scene &scene);
 	~Scene();
 
-	virtual void update(const float deltaTime);
+	virtual void update(const float &deltaTime);
 	virtual void render() const;
 	virtual void init();
 
