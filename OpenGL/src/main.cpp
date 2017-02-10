@@ -3,9 +3,13 @@
 #include <GL\freeglut.h>
 #include <iostream>
 #include <cmath>
+#include <glm/vec3.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 #include "shader.h"
 #include "scene.h"
+#include "entity.h"
 
 using namespace std;
 
@@ -43,7 +47,7 @@ int main(int argc, char* argv[]) {
 		glutCreateWindow("Hello, GL");
 		glutReshapeFunc(changeViewPort);
 		glutDisplayFunc(render);
-		glutIdleFunc(update);
+		glutIdleFunc(update); 
 
 		scene = new Scene();
 
@@ -60,8 +64,15 @@ int main(int argc, char* argv[]) {
 	{
 		std::cout << "Exception " << e.what() << std::endl;
 	}
+	vec4 pos(0, 2, 0, 1);
+	Transform transform(vec3(0, 0, 0), angleAxis<float>(0, vec3(1, 0, 0)), vec3(2, 2, 2));
+	mat4x4 matrix = transform.getGlobalMatrix();
+	vec4 result = matrix * pos;
+	std::cout << to_string(pos) << std::endl;
+	std::cout << to_string(result) << std::endl;
 
 	glutMainLoop();
+
 
 	delete basicShader;
 	return 0;

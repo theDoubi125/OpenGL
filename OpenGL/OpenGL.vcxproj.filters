@@ -11,6 +11,9 @@
     <Filter Include="src\scene">
       <UniqueIdentifier>{1ff341ec-7529-4e37-bb65-a0ce5aa277fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\entity">
+      <UniqueIdentifier>{e1fe3570-0610-44b7-9fe9-f88b5a6f88cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -22,6 +25,9 @@
     <ClCompile Include="src\scene.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\entity.cpp">
+      <Filter>src\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -29,6 +35,9 @@
     </ClInclude>
     <ClInclude Include="src\scene.h">
       <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entity.h">
+      <Filter>src\entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\shader.h" />
   </ItemGroup>
@@ -83,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Documents\Julien\Projets\C++\Libraries\glew-2.0.0\include;G:\Documents\Julien\Projets\C++\Libraries\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>G:\Documents\Julien\Projets\C++\Libraries\glm;G:\Documents\Julien\Projets\C++\Libraries\glew-2.0.0\include;G:\Documents\Julien\Projets\C++\Libraries\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>G:\Documents\Julien\Projets\C++\Libraries\glew-2.0.0\lib\Release\Win32;G:\Documents\Julien\Projets\C++\Libraries\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
