@@ -18,8 +18,6 @@ public:
 
 
 protected:
-	float *m_vertices;
-	float *m_textCoords;
 	GLuint m_vboId;
 };
 
@@ -33,6 +31,9 @@ public:
 	virtual int vertexCount() const override;
 	virtual float* getVertex() const override;
 	virtual float* getTexCoords() const override;
+private:
+	float *m_vertices;
+	float *m_textCoords;
 };
 
 #endif MESH_INCLUDED

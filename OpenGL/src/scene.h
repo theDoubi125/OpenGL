@@ -33,6 +33,8 @@ private:
 	std::vector<Entity*> m_entities;
 	glm::vec2 m_screenSize;
 	glm::mat4 m_projectionMatrix;
+
+	Entity* m_test;
 };
 
 #endif SCENE_HEADER

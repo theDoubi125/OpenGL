@@ -68,7 +68,9 @@ protected:
 private:
 	Transform m_transform;
 	const Scene* m_scene;
+	Shader* m_shader;
 	Mesh* m_mesh;
+	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
 };
 
 #endif

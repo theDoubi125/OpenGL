@@ -46,7 +46,7 @@ mat4x4 Transform::getGlobalMatrix() const
 {
 	if (m_parent == NULL)
 		return getLocalMatrix();
-	return getLocalMatrix() * m_parent->getGlobalMatrix();
+	return m_parent->getGlobalMatrix() * getLocalMatrix();
 }
 
 mat4x4 Transform::getLocalMatrix() const
@@ -92,28 +92,36 @@ void Transform::scale(const vec3 &v)
 	m_localScale *= v;
 }
 
-Entity::Entity(const Scene *scene) : m_scene(scene)
+Entity::Entity(const Scene *scene) : m_scene(scene), m_shader(new Shader("resources/shaders/shader_base.vert", "resources/shaders/shader_base.frag"))
 {
 
 }
 
-Entity::Entity(const Entity& entity) : m_transform(entity.m_transform), m_scene(entity.m_scene)
+Entity::Entity(const Entity& entity) : m_transform(entity.m_transform), m_scene(entity.m_scene), m_shader(new Shader(*entity.m_shader))
 {
 
 }
 
 Entity::~Entity()
 {
-
+	delete m_shader;
 }
 
 void Entity::init()
 {
+	m_shader->load();
+	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
+	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
+	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
 	m_mesh->init();
 }
 
 void Entity::render() const
 {
+	glUseProgram(m_shader->getProgramId());
+	glUniformMatrix4fv(m_modelMatrixId, 1, GL_FALSE, glm::value_ptr(transform().getGlobalMatrix()));
+	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(mat4(1)));
+	glUniformMatrix4fv(m_projMatrixId, 1, GL_FALSE, glm::value_ptr(scene().projectionMatrix()));
 	m_mesh->render();
 }
 

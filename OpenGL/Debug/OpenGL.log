@@ -1,3 +1,4 @@
-﻿  cube.cpp
+﻿cl : Ligne de commande warning D9028: échec de la régénération minimale, passage à la génération normale
+  cube.cpp
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)
