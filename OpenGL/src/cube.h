@@ -14,10 +14,12 @@ public:
 	virtual void update(const float &deltaTime) override;
 
 private:
+	Shader* m_shader;
+	float *m_vertices;
+	float *m_textCoords;
 	float m_time;
 	GLuint m_texture;
-	float* m_vertices;
-	float* m_texCoords;
+	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
 };
 
 #endif

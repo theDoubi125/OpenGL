@@ -92,44 +92,29 @@ void Transform::scale(const vec3 &v)
 	m_localScale *= v;
 }
 
-Entity::Entity(const Scene *scene, Shader* shader) : m_scene(scene), m_mesh(NULL), m_shader(shader)
+Entity::Entity(const Scene *scene) : m_scene(scene)
 {
 
 }
 
-Entity::Entity(const Entity& entity) : m_transform(entity.m_transform), m_scene(entity.m_scene), m_mesh(entity.m_mesh)
+Entity::Entity(const Entity& entity) : m_transform(entity.m_transform), m_scene(entity.m_scene)
 {
 
 }
 
 Entity::~Entity()
 {
-	delete m_shader;
+
 }
 
 void Entity::init()
 {
-	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
-	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
-	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
-	m_shader->load();
 	m_mesh->init();
 }
 
 void Entity::render() const
 {
-	if (m_shader == NULL)
-		return;
-
-	mat4 transformMatrix = transform().getGlobalMatrix();
-	glUseProgram(m_shader->getProgramId());
-	std::cout << glm::to_string(scene().projectionMatrix() * transform().getGlobalMatrix() * glm::vec4(0.0, 0.0, -5.0, 1.0)) << std::endl;
-	glUniformMatrix4fv(m_modelMatrixId, 1, GL_FALSE, glm::value_ptr(mat4(1)));
-	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(mat4(1)));
-	glUniformMatrix4fv(m_projMatrixId, 1, GL_FALSE, glm::value_ptr(mat4(1)));
 	m_mesh->render();
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glUseProgram(0);
 }
 
 void Entity::update(const float &deltaTime)
@@ -157,7 +142,7 @@ const Scene& Entity::scene() const
 	return *m_scene;
 }
 
-void Entity::setMesh(Mesh* mesh)
+void Entity::setMesh(Mesh *mesh)
 {
 	m_mesh = mesh;
 }

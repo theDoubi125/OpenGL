@@ -38,12 +38,12 @@ void Mesh::init()
 
 void Mesh::render() const
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(float) * 3 * vertexCount()));
+	//glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, m_vertices);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, m_textCoords);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDrawArrays(GL_QUADS, 0, vertexCount());
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

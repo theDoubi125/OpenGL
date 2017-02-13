@@ -1,12 +1,13 @@
 #ifndef ENTITY_INCLUDED
 #define ENTITY_INCLUDED
 
-#include "mesh.h"
 #include "scene.h"
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
 #include <glm\gtc\quaternion.hpp>
 #include <iostream>
+
+#include "mesh.h"
 
 using namespace glm;
 
@@ -46,30 +47,28 @@ private:
 class Entity : public GameEntity
 {
 public:
-	Entity(const Scene *scene, Shader* shader);
+	Entity(const Scene *scene);
 	Entity(const Entity& model);
 	virtual ~Entity();
 
-	virtual void init() override;
-	virtual void update(const float &deltaTime) override;
-	virtual void render() const override;
+	virtual void init();
+	virtual void update(const float &deltaTime);
+	virtual void render() const;
 
 	Transform& transform();
 	const Transform& transform() const;
 
 	virtual bool isAlive() const;
 
-	void setMesh(Mesh* mesh);
+	void setMesh(Mesh *mesh);
 
 protected:
 	const Scene& scene() const;
 
-protected:
+private:
 	Transform m_transform;
 	const Scene* m_scene;
 	Mesh* m_mesh;
-	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
-	Shader* m_shader;
 };
 
 #endif
