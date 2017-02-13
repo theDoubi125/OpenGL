@@ -1,48 +1,70 @@
 #include <GL\glew.h>
 #include <GL\freeglut.h>
+#include <glm\gtc\matrix_transform.hpp>
 
 #include "shader.h"
 #include "scene.h"
+#include "entity.h"
+#include "cube.h"
+
 # define PI           3.14159265358979323846
 
-Scene::Scene() : m_shader(new Shader("Shaders/shader_base.vert", "Shaders/shader_base.frag")), m_time(0)
+Scene::Scene(vec2 screenSize) : m_screenSize(screenSize)
 {
-	m_vertices = new float[9] { 0, 0, 0, 0, 0.5, 0, 0.5, 0, 0 };
+	Cube *cube = new Cube(this);
+	m_entities.push_back(cube);
+	m_projectionMatrix = glm::perspective(70.0, (double)(m_screenSize.x / m_screenSize.y), 0.001, 100.0);
 }
 
-Scene::Scene(const Scene &scene) : m_shader(NULL), m_time(0)
+Scene::Scene(const Scene &scene)
 {
-	m_vertices = new float[9] { 0, 0, 0, 0, 0.5, 0, 0.5, 0, 0 };
+
 }
 
 Scene::~Scene()
 {
-	delete m_shader;
-	delete[] m_vertices;
+	for (int i = 0; i < m_entities.size(); i++)
+		delete m_entities[i];
 }
 
 void Scene::init()
 {
-	m_shader->load();
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	for (int i = 0; i < m_entities.size(); i++)
+	{
+		m_entities[i]->init();
+	}
 }
 
 void Scene::update(const float &deltaTime)
 {
-	m_time += deltaTime;
-	m_vertices[1] = cos(2 * m_time * PI);
-	m_vertices[3] = cos(2 * m_time * PI);
+	for (int i = 0; i < m_entities.size(); i++)
+		m_entities[i]->update(deltaTime);
 }
 
 void Scene::render() const
 {
-	if (m_shader == NULL)
-		return;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, m_vertices);
-	glUseProgram(m_shader->getProgramId());
-	glEnableVertexAttribArray(0);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
+
+	for (int i = 0; i < m_entities.size(); i++)
+		m_entities[i]->render();
+	
 	glutSwapBuffers();
-	glUseProgram(0);
+}
+
+void Scene::onResize(vec2 screenSize)
+{
+	m_screenSize = screenSize;
+	m_projectionMatrix = glm::perspective(70.0, (double)(m_screenSize.x / m_screenSize.y), 0.001, 100.0);
+}
+
+vec2 Scene::screenSize() const
+{
+	return m_screenSize;
+}
+
+const mat4& Scene::projectionMatrix() const
+{
+	return m_projectionMatrix;
 }

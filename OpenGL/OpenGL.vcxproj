@@ -19,15 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\mesh.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{099C103F-8B38-4662-BE48-7B4FCE077F6A}</ProjectGuid>
@@ -85,11 +92,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\libs\glm;C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\libs\glew-2.0.0\include;C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\soil\src;..\libs\glm;..\libs\glew-2.0.0\include;..\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\libs\glew-2.0.0\lib\Release\Win32;C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\libs\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\soil\lib;..\libs\glew-2.0.0\lib\Release\Win32;..\libs\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

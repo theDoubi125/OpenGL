@@ -14,13 +14,14 @@
 using namespace std;
 
 Shader *basicShader;
+Scene* scene;
 
 void changeViewPort(int w, int h)
 {
 	glViewport(0, 0, w, h);
+	scene->onResize(vec2(w, h));
 }
 
-Scene* scene;
 
 void render()
 {
@@ -49,8 +50,7 @@ int main(int argc, char* argv[]) {
 		glutDisplayFunc(render);
 		glutIdleFunc(update); 
 
-		scene = new Scene();
-
+		scene = new Scene(vec2(800, 600));
 
 		GLenum err = glewInit();
 		if (GLEW_OK != err)

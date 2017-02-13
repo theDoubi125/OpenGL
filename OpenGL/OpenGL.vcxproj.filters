@@ -14,6 +14,12 @@
     <Filter Include="src\entity">
       <UniqueIdentifier>{e1fe3570-0610-44b7-9fe9-f88b5a6f88cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\entity\cube">
+      <UniqueIdentifier>{0b635eb4-0bdc-4c5b-ab11-daa7df2ba534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\entity\mesh">
+      <UniqueIdentifier>{98078c23-b2c1-49e4-bf7c-72d2a9f8a6c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -28,6 +34,12 @@
     <ClCompile Include="src\entity.cpp">
       <Filter>src\entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\cube.cpp">
+      <Filter>src\entity\cube</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mesh.cpp">
+      <Filter>src\entity\mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -39,5 +51,14 @@
     <ClInclude Include="src\entity.h">
       <Filter>src\entity</Filter>
     </ClInclude>
+    <ClInclude Include="src\cube.h">
+      <Filter>src\entity\cube</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mesh.h">
+      <Filter>src\entity\mesh</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -1,11 +1,5 @@
-﻿  scene.cpp
-c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Compiling...
-  main.cpp
-c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\main.cpp(34): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  entity.cpp
-  Generating Code...
-  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.exe
-  OpenGL.vcxproj -> C:\Users\jrevel\Documents\Visual Studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)
+﻿  mesh.cpp
+  cube.cpp
+  Génération de code en cours...
+  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)

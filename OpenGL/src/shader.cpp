@@ -44,9 +44,9 @@ void Shader::load()
 	glAttachShader(m_programId, m_vertexId);
 	glAttachShader(m_programId, m_fragmentId);
 
-	glBindAttribLocation(m_programId, 0, "in_vertex");
-	glBindAttribLocation(m_programId, 1, "in_color");
-	glBindAttribLocation(m_programId, 2, "in_texCoord");
+	glBindAttribLocation(m_programId, 0, "in_Vertex");
+	glBindAttribLocation(m_programId, 1, "in_texCoord");
+	glBindAttribLocation(m_programId, 2, "in_color");
 
 	glLinkProgram(m_programId);
 
@@ -110,7 +110,7 @@ void Shader::compile(GLuint &shader, GLenum type, std::string const &path)
 		glGetShaderInfoLog(shader, errorSize, &errorSize, error);
 		error[errorSize] = '\0';
 		std::string errorMessage(error);
-		throw std::exception(error);
+		throw std::exception(("Error while compiling shader : \n" + errorMessage).c_str());
 	}
 }
 
