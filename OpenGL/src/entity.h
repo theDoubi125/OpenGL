@@ -52,7 +52,7 @@ public:
 	virtual ~Entity();
 
 	virtual void init();
-	virtual void update(const float &deltaTime);
+	virtual void update(float deltaTime);
 	virtual void render() const;
 
 	Transform& transform();

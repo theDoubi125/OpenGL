@@ -118,14 +118,16 @@ void Entity::init()
 
 void Entity::render() const
 {
+	glEnable(GL_DEPTH_TEST);
 	glUseProgram(m_shader->getProgramId());
 	glUniformMatrix4fv(m_modelMatrixId, 1, GL_FALSE, glm::value_ptr(transform().getGlobalMatrix()));
 	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(mat4(1)));
 	glUniformMatrix4fv(m_projMatrixId, 1, GL_FALSE, glm::value_ptr(scene().projectionMatrix()));
 	m_mesh->render();
+	glUseProgram(0);
 }
 
-void Entity::update(const float &deltaTime)
+void Entity::update(float deltaTime)
 {
 
 }

@@ -10,6 +10,7 @@
 #include "shader.h"
 #include "scene.h"
 #include "entity.h"
+#include "input.h"
 
 using namespace std;
 
@@ -35,10 +36,27 @@ void update()
 	float deltaTime = (time - lastFrameTime) / 1000.0;
 	scene->update(deltaTime);
 	lastFrameTime = time;
+	Input::instance.update();
 	glutPostRedisplay();
 }
 
-int main(int argc, char* argv[]) {
+void onMouseEvent(int button, int state, int x, int y)
+{
+	Input::instance.onMouseEvent(button, state, x, y);
+}
+
+void onSpecialKeyDown(int button, int x, int y)
+{
+	Input::instance.onSpecialKeyDown(button, x, y);
+}
+
+void onSpecialKeyUp(int button, int x, int y)
+{
+	Input::instance.onSpecialKeyUp(button, x, y);
+}
+
+int main(int argc, char* argv[])
+{
 	try
 	{
 		glutInit(&argc, argv);
@@ -48,7 +66,10 @@ int main(int argc, char* argv[]) {
 		glutCreateWindow("Hello, GL");
 		glutReshapeFunc(changeViewPort);
 		glutDisplayFunc(render);
-		glutIdleFunc(update); 
+		glutIdleFunc(update);
+		glutMouseFunc(onMouseEvent);
+		glutSpecialFunc(onSpecialKeyDown);
+		glutSpecialUpFunc(onSpecialKeyUp);
 
 		scene = new Scene(vec2(800, 600));
 
@@ -64,12 +85,6 @@ int main(int argc, char* argv[]) {
 	{
 		std::cout << "Exception " << e.what() << std::endl;
 	}
-	vec4 pos(0, 2, 0, 1);
-	Transform transform(vec3(0, 0, 0), angleAxis<float>(0, vec3(1, 0, 0)), vec3(2, 2, 2));
-	mat4x4 matrix = transform.getGlobalMatrix();
-	vec4 result = matrix * pos;
-	std::cout << to_string(pos) << std::endl;
-	std::cout << to_string(result) << std::endl;
 
 	glutMainLoop();
 

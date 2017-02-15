@@ -20,6 +20,9 @@
     <Filter Include="src\entity\mesh">
       <UniqueIdentifier>{98078c23-b2c1-49e4-bf7c-72d2a9f8a6c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{72ee8d04-2bea-4721-869a-6ab172a6f580}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -40,6 +43,9 @@
     <ClCompile Include="src\mesh.cpp">
       <Filter>src\entity\mesh</Filter>
     </ClCompile>
+    <ClCompile Include="src\input.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -56,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="src\mesh.h">
       <Filter>src\entity\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,17 +9,13 @@
 
 # define PI           3.14159265358979323846
 
-Scene::Scene(vec2 screenSize) : m_screenSize(screenSize)
+Scene::Scene(vec2 screenSize) : m_screenSize(screenSize), m_camera(new Camera(70, (double)(screenSize.x/screenSize.y), 0.001, 100))
 {
+	m_camera->transform().translate(vec3(0, 2, 0));
 	m_test = new Cube(this);
-	m_test->transform().translate(vec3(0, 0, -5));
-	m_test->transform().rotate(vec3(1, 0, 0), 1);
-	Cube *cube2 = new Cube(this);
-	cube2->transform().translate(vec3(1, 0, 0));
-	cube2->transform().setParent(&m_test->transform());
+	m_test->transform().translate(vec3(0, -1, -5));
+	m_test->transform().rotate(vec3(0, 1, 0), 50);
 	m_entities.push_back(m_test);
-	m_entities.push_back(cube2);
-	m_projectionMatrix = glm::perspective(70.0, (double)(m_screenSize.x / m_screenSize.y), 0.001, 100.0);
 }
 
 Scene::Scene(const Scene &scene)
@@ -35,7 +31,6 @@ Scene::~Scene()
 
 void Scene::init()
 {
-	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	for (int i = 0; i < m_entities.size(); i++)
 	{
@@ -43,7 +38,7 @@ void Scene::init()
 	}
 }
 
-void Scene::update(const float &deltaTime)
+void Scene::update(float deltaTime)
 {
 	for (int i = 0; i < m_entities.size(); i++)
 		m_entities[i]->update(deltaTime);
@@ -64,7 +59,7 @@ void Scene::render() const
 void Scene::onResize(vec2 screenSize)
 {
 	m_screenSize = screenSize;
-	m_projectionMatrix = glm::perspective(70.0, (double)(m_screenSize.x / m_screenSize.y), 0.001, 100.0);
+	m_camera->setScreenRatio(screenSize.x / screenSize.y);
 }
 
 vec2 Scene::screenSize() const
@@ -74,5 +69,41 @@ vec2 Scene::screenSize() const
 
 const mat4& Scene::projectionMatrix() const
 {
+	return m_camera->projectionMatrix();
+}
+
+const mat4& Scene::viewMatrix() const
+{
+	return m_camera->viewMatrix();
+}
+
+Camera::Camera(float fov, float ratio, float nearDist, float farDist) : m_fov(fov), m_ratio(ratio), m_near(nearDist), m_far(far), m_transform(new Transform())
+{
+	m_projectionMatrix = glm::perspective(m_fov, m_ratio, m_near, m_far);
+}
+
+Camera::~Camera()
+{
+	delete m_transform;
+}
+
+const glm::mat4& Camera::projectionMatrix() const
+{
 	return m_projectionMatrix;
+}
+
+const glm::mat4& Camera::viewMatrix() const
+{
+	return glm::transpose(m_transform->getGlobalMatrix());
+}
+
+void Camera::setScreenRatio(float ratio)
+{
+	m_ratio = ratio;
+	m_projectionMatrix = glm::perspective(m_fov, m_ratio, m_near, m_far);
+}
+
+Transform& Camera::transform()
+{
+	return *m_transform;
 }
