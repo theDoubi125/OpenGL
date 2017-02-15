@@ -1,13 +1,8 @@
 ﻿  scene.cpp
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(12): warning C4305: 'argument' : troncation de 'double' à 'float'
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(12): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(13): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
 g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(28): warning C4018: '<' : incompatibilité signed/unsigned
 g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(35): warning C4018: '<' : incompatibilité signed/unsigned
 g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(43): warning C4018: '<' : incompatibilité signed/unsigned
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(53): warning C4018: '<' : incompatibilité signed/unsigned
-  entity.cpp
-  cube.cpp
-  Génération de code en cours...
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(97): warning C4172: retourne l'adresse d'une variable locale ou  temporaire
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(57): warning C4018: '<' : incompatibilité signed/unsigned
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)

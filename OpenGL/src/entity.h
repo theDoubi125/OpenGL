@@ -25,8 +25,11 @@ public:
 	void setParent(Transform *parent);
 
 	mat4x4 getLocalMatrix() const;
+	mat4x4 getReverseLocalMatrix() const;
 
 	mat4x4 getGlobalMatrix() const;
+
+	void setPosition(const vec3 &p);
 
 	const vec3& getPosition() const;
 	const vec3& getScale() const;

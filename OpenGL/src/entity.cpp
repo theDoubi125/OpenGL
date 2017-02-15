@@ -49,6 +49,14 @@ mat4x4 Transform::getGlobalMatrix() const
 	return m_parent->getGlobalMatrix() * getLocalMatrix();
 }
 
+mat4x4 Transform::getReverseLocalMatrix() const
+{
+	mat4 t = glm::translate(mat4(1.0f), -m_localPos);
+	mat4 r = glm::transpose(glm::mat4_cast(m_localRot));
+	mat4 s = glm::scale(mat4(1.0f), vec3(1)/m_localScale);
+	return s * r * t;
+}
+
 mat4x4 Transform::getLocalMatrix() const
 {
 	mat4 t = glm::translate(mat4(1.0f), m_localPos);
@@ -87,6 +95,11 @@ void Transform::translate(const vec3& v)
 	m_localPos += v;
 }
 
+void Transform::setPosition(const vec3& p)
+{
+	m_localPos = p;
+}
+
 void Transform::scale(const vec3 &v)
 {
 	m_localScale *= v;
@@ -121,7 +134,8 @@ void Entity::render() const
 	glEnable(GL_DEPTH_TEST);
 	glUseProgram(m_shader->getProgramId());
 	glUniformMatrix4fv(m_modelMatrixId, 1, GL_FALSE, glm::value_ptr(transform().getGlobalMatrix()));
-	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(mat4(1)));
+	mat4 viewMatrix = scene().viewMatrix();
+	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(m_projMatrixId, 1, GL_FALSE, glm::value_ptr(scene().projectionMatrix()));
 	m_mesh->render();
 	glUseProgram(0);

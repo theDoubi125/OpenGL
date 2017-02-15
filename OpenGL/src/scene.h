@@ -28,8 +28,8 @@ public:
 	void onResize(glm::vec2 screenSize);
 
 	glm::vec2 screenSize() const;
-	const glm::mat4& projectionMatrix() const;
-	const glm::mat4& viewMatrix() const;
+	const glm::mat4 projectionMatrix() const;
+	const glm::mat4 viewMatrix() const;
 
 private:
 	std::vector<Entity*> m_entities;
@@ -37,6 +37,7 @@ private:
 
 	Entity* m_test;
 	Camera* m_camera;
+	float m_time;
 };
 
 class Transform;
@@ -46,8 +47,8 @@ public:
 	Camera(float fov, float ratio, float nearDist, float farDist);
 	~Camera();
 
-	const glm::mat4& projectionMatrix() const;
-	const glm::mat4& viewMatrix() const;
+	const glm::mat4 projectionMatrix() const;
+	const glm::mat4 viewMatrix() const;
 
 	void setScreenRatio(float ratio);
 	Transform& transform();
@@ -55,8 +56,8 @@ public:
 private:
 	Transform *m_transform;
 	glm::mat4 m_projectionMatrix;
-	float m_fov;
-	float m_near, m_far, m_ratio;
+	double m_fov;
+	double m_near, m_far, m_ratio;
 };
 
 #endif SCENE_HEADER
