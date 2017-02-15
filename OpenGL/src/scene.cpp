@@ -14,7 +14,6 @@ Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(ne
 {
 	m_test = new Cube(this);
 	m_test->transform().translate(vec3(0, -1, -5));
-	m_test->transform().rotate(vec3(0, 1, 0), 50);
 	m_entities.push_back(m_test);
 }
 
@@ -43,7 +42,6 @@ void Scene::update(float deltaTime)
 	for (int i = 0; i < m_entities.size(); i++)
 		m_entities[i]->update(deltaTime);
 
-	m_test->transform().rotate(vec3(0, 1, 0), deltaTime);
 	m_time += deltaTime;
 	m_camera->transform().setPosition(vec3(0, 1, 0));
 }

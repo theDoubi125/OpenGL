@@ -1,8 +1,8 @@
 ﻿  scene.cpp
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(13): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(28): warning C4018: '<' : incompatibilité signed/unsigned
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(35): warning C4018: '<' : incompatibilité signed/unsigned
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(43): warning C4018: '<' : incompatibilité signed/unsigned
-g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(57): warning C4018: '<' : incompatibilité signed/unsigned
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(13): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(27): warning C4018: '<': signed/unsigned mismatch
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(34): warning C4018: '<': signed/unsigned mismatch
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(42): warning C4018: '<': signed/unsigned mismatch
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\scene.cpp(54): warning C4018: '<': signed/unsigned mismatch
+  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)

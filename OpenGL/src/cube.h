@@ -1,7 +1,9 @@
 #ifndef CUBE_INCLUDED
 #define CUBE_INCLUDED
 
+#include <stack>
 #include "entity.h"
+class StateMachine;
 class CubeBehaviour;
 class Cube : public Entity
 {
@@ -19,7 +21,7 @@ private:
 	float m_time;
 	GLuint m_texture;
 	glm::ivec2 m_movingDir;
-	CubeBehaviour* m_behaviour;
+	StateMachine *m_stateMachine;
 };
 
 class CubeBehaviour
@@ -30,6 +32,25 @@ public:
 	virtual void update(float deltaTime) = 0;
 protected:
 	Cube &m_cube;
+};
+
+class StateMachine
+{
+public:
+	StateMachine(Cube &cube, CubeBehaviour* initState);
+	~StateMachine();
+
+	void pushState(CubeBehaviour* state);
+	void popState();
+	void replaceState(CubeBehaviour* state);
+
+	CubeBehaviour& currentState() const;
+
+	void update(float deltaTime);
+
+private:
+	Cube& m_cube;
+	std::stack<CubeBehaviour*> m_states;
 };
 
 class IdleBehaviour : public CubeBehaviour

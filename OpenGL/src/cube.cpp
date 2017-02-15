@@ -11,19 +11,19 @@
 #include <SOIL.h>
 #include "input.h"
 
-Cube::Cube(const Scene* scene) : Entity(scene), m_time(0), m_behaviour(NULL)
+Cube::Cube(const Scene* scene) : Entity(scene), m_time(0), m_stateMachine(NULL)
 {
-	
+
 }
 
-Cube::Cube(const Cube &cube) : Entity(cube), m_time(0), m_behaviour(NULL)
+Cube::Cube(const Cube &cube) : Entity(cube), m_time(0), m_stateMachine(NULL)
 {
 
 }
 
 Cube::~Cube()
 {
-	delete m_behaviour;
+	delete m_stateMachine;
 }
 
 void Cube::init()
@@ -41,7 +41,7 @@ void Cube::init()
 	{
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 	}
-	m_behaviour = new IdleBehaviour(*this);
+	m_stateMachine = new StateMachine(*this, new IdleBehaviour(*this));
 }
 
 void Cube::render() const
@@ -56,14 +56,53 @@ void Cube::render() const
 void Cube::update(float deltaTime)
 {
 	m_time += deltaTime;
-	m_behaviour->update(deltaTime);
+	m_stateMachine->update(deltaTime);
 }
 
 void Cube::setBehaviour(CubeBehaviour *behaviour)
 {
-	if (m_behaviour != NULL)
-		delete m_behaviour;
-	m_behaviour = behaviour;
+	m_stateMachine->pushState(behaviour);
+}
+
+StateMachine::StateMachine(Cube &cube, CubeBehaviour *initState) : m_cube(cube)
+{
+	m_states.push(initState);
+}
+
+StateMachine::~StateMachine()
+{
+	while (!m_states.empty())
+	{
+		delete m_states.top();
+		m_states.pop();
+	}
+}
+
+void StateMachine::pushState(CubeBehaviour *state)
+{
+	m_states.push(state);
+}
+
+void StateMachine::popState()
+{
+	delete m_states.top();
+	m_states.pop();
+}
+
+void StateMachine::replaceState(CubeBehaviour *state)
+{
+	popState();
+	pushState(state);
+}
+
+CubeBehaviour& StateMachine::currentState() const
+{
+	return *m_states.top();
+}
+
+void StateMachine::update(float deltaTime)
+{
+	m_states.top()->update(deltaTime);
 }
 
 CubeBehaviour::CubeBehaviour(Cube &cube) : m_cube(cube)
@@ -118,5 +157,24 @@ RollingBehaviour::~RollingBehaviour()
 
 void RollingBehaviour::update(float deltaTime)
 {
+	ivec2 dir = vec2(0);
+	if (Input::instance.isKeyDown(GLUT_KEY_RIGHT))
+	{
+		dir += vec2(1, 0);
+	}
+	else if (Input::instance.isKeyDown(GLUT_KEY_LEFT))
+	{
+		dir += vec2(-1, 0);
+	}
+	else if (Input::instance.isKeyDown(GLUT_KEY_UP))
+	{
+		dir += vec2(0, -1);
+	}
+	else if (Input::instance.isKeyDown(GLUT_KEY_DOWN))
+	{
+		dir += vec2(0, 1);
+	}
 	m_cube.transform().translate(glm::vec3(m_dir.x, 0, m_dir.y) * deltaTime);
+	if (m_dir != dir)
+		m_cube.setBehaviour(new IdleBehaviour(m_cube));
 }
