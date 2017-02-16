@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "mesh.h"
+# define PI           3.14159265358979323846
 
 using namespace glm;
 
@@ -39,6 +40,8 @@ public:
 	void rotate(const vec3 &axis, float angle);
 	void translate(const vec3 &v);
 	void scale(const vec3 &v);
+
+	glm::vec3 worldToLocal(glm::vec3 v) const;
 
 private:
 	vec3 m_localPos;

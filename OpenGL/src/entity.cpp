@@ -105,6 +105,13 @@ void Transform::scale(const vec3 &v)
 	m_localScale *= v;
 }
 
+glm::vec3 Transform::worldToLocal(glm::vec3 v) const
+{
+	glm::vec4 localPos(v.x, v.y, v.z, 1);
+	glm::vec4 result = getGlobalMatrix() * localPos;
+	return glm::vec3(result.x / result.w, result.y / result.w, result.z / result.w);
+}
+
 Entity::Entity(const Scene *scene) : m_scene(scene), m_shader(new Shader("resources/shaders/shader_base.vert", "resources/shaders/shader_base.frag"))
 {
 

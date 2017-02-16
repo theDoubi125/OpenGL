@@ -24,16 +24,7 @@ private:
 	StateMachine *m_stateMachine;
 };
 
-class CubeBehaviour
-{
-public:
-	CubeBehaviour(Cube &cube);
-	virtual ~CubeBehaviour();
-	virtual void update(float deltaTime) = 0;
-protected:
-	Cube &m_cube;
-};
-
+class CubeBehaviour;
 class StateMachine
 {
 public:
@@ -48,15 +39,28 @@ public:
 
 	void update(float deltaTime);
 
+	Transform& transform();
+
 private:
 	Cube& m_cube;
 	std::stack<CubeBehaviour*> m_states;
 };
 
+class CubeBehaviour
+{
+public:
+	CubeBehaviour();
+	virtual ~CubeBehaviour();
+	void setStateMachine(StateMachine *machine);
+	virtual void update(float deltaTime) = 0;
+protected:
+	StateMachine *m_machine;
+};
+
 class IdleBehaviour : public CubeBehaviour
 {
 public:
-	IdleBehaviour(Cube &cube);
+	IdleBehaviour();
 	virtual ~IdleBehaviour();
 	virtual void update(float deltaTime) override;
 };
@@ -64,12 +68,13 @@ public:
 class RollingBehaviour : public CubeBehaviour
 {
 public:
-	RollingBehaviour(Cube &cube, glm::ivec2 dir);
+	RollingBehaviour(glm::ivec2 dir);
 	virtual ~RollingBehaviour();
 	virtual void update(float deltaTime) override;
 
 private:
 	glm::ivec2 m_dir;
+	float m_stepDuration, m_stepDist, m_time;
 };
 
 #endif

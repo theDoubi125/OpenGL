@@ -41,7 +41,7 @@ void Cube::init()
 	{
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 	}
-	m_stateMachine = new StateMachine(*this, new IdleBehaviour(*this));
+	m_stateMachine = new StateMachine(*this, new IdleBehaviour());
 }
 
 void Cube::render() const
@@ -66,7 +66,7 @@ void Cube::setBehaviour(CubeBehaviour *behaviour)
 
 StateMachine::StateMachine(Cube &cube, CubeBehaviour *initState) : m_cube(cube)
 {
-	m_states.push(initState);
+	pushState(initState);
 }
 
 StateMachine::~StateMachine()
@@ -80,11 +80,14 @@ StateMachine::~StateMachine()
 
 void StateMachine::pushState(CubeBehaviour *state)
 {
+	state->setStateMachine(this);
 	m_states.push(state);
 }
 
 void StateMachine::popState()
 {
+	if (m_states.empty())
+		throw std::exception("Empty stateMachine stack");
 	delete m_states.top();
 	m_states.pop();
 }
@@ -93,6 +96,11 @@ void StateMachine::replaceState(CubeBehaviour *state)
 {
 	popState();
 	pushState(state);
+}
+
+Transform& StateMachine::transform()
+{
+	return m_cube.transform();
 }
 
 CubeBehaviour& StateMachine::currentState() const
@@ -105,7 +113,7 @@ void StateMachine::update(float deltaTime)
 	m_states.top()->update(deltaTime);
 }
 
-CubeBehaviour::CubeBehaviour(Cube &cube) : m_cube(cube)
+CubeBehaviour::CubeBehaviour() : m_machine(NULL)
 {
 
 }
@@ -115,7 +123,12 @@ CubeBehaviour::~CubeBehaviour()
 
 }
 
-IdleBehaviour::IdleBehaviour(Cube& cube) : CubeBehaviour(cube)
+void CubeBehaviour::setStateMachine(StateMachine *machine)
+{
+	m_machine = machine;
+}
+
+IdleBehaviour::IdleBehaviour()
 {
 
 }
@@ -129,23 +142,23 @@ void IdleBehaviour::update(float deltaTime)
 {
 	if (Input::instance.isKeyDown(GLUT_KEY_RIGHT))
 	{
-		m_cube.setBehaviour(new RollingBehaviour(m_cube, glm::ivec2(1, 0)));
+		m_machine->pushState(new RollingBehaviour(glm::ivec2(1, 0)));
 	}
 	else if (Input::instance.isKeyDown(GLUT_KEY_LEFT))
 	{
-		m_cube.setBehaviour(new RollingBehaviour(m_cube, glm::ivec2(-1, 0)));
+		m_machine->pushState(new RollingBehaviour(glm::ivec2(-1, 0)));
 	}
 	else if (Input::instance.isKeyDown(GLUT_KEY_UP))
 	{
-		m_cube.setBehaviour(new RollingBehaviour(m_cube, glm::ivec2(0, -1)));
+		m_machine->pushState(new RollingBehaviour(glm::ivec2(0, -1)));
 	}
 	else if (Input::instance.isKeyDown(GLUT_KEY_DOWN))
 	{
-		m_cube.setBehaviour(new RollingBehaviour(m_cube, glm::ivec2(0, 1)));
+		m_machine->pushState(new RollingBehaviour(glm::ivec2(0, 1)));
 	}
 }
 
-RollingBehaviour::RollingBehaviour(Cube& cube, glm::ivec2 dir) : CubeBehaviour(cube), m_dir(dir)
+RollingBehaviour::RollingBehaviour(glm::ivec2 dir) : m_dir(dir), m_stepDuration(1), m_stepDist(1), m_time(0)
 {
 
 }
@@ -157,24 +170,14 @@ RollingBehaviour::~RollingBehaviour()
 
 void RollingBehaviour::update(float deltaTime)
 {
-	ivec2 dir = vec2(0);
-	if (Input::instance.isKeyDown(GLUT_KEY_RIGHT))
-	{
-		dir += vec2(1, 0);
-	}
-	else if (Input::instance.isKeyDown(GLUT_KEY_LEFT))
-	{
-		dir += vec2(-1, 0);
-	}
-	else if (Input::instance.isKeyDown(GLUT_KEY_UP))
-	{
-		dir += vec2(0, -1);
-	}
-	else if (Input::instance.isKeyDown(GLUT_KEY_DOWN))
-	{
-		dir += vec2(0, 1);
-	}
-	m_cube.transform().translate(glm::vec3(m_dir.x, 0, m_dir.y) * deltaTime);
-	if (m_dir != dir)
-		m_cube.setBehaviour(new IdleBehaviour(m_cube));
+	deltaTime = min(deltaTime, m_stepDuration-m_time);
+	glm::vec3 dir = glm::vec3(m_dir.x, 0, m_dir.y);
+	Transform &transform = m_machine->transform();
+	transform.translate(dir * deltaTime / m_stepDuration * m_stepDist);
+	glm::vec3 pos = transform.worldToLocal(glm::vec3(0, 1, 0))-transform.worldToLocal(glm::vec3(0, 0, 0));
+	std::cout << to_string(pos) << std::endl;
+	transform.rotate(glm::normalize(glm::cross(dir, pos)), deltaTime * PI / 2 / m_stepDuration);
+	if (m_time + deltaTime >= m_stepDuration)
+		m_machine->popState();
+	m_time += deltaTime;
 }

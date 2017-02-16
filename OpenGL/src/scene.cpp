@@ -8,8 +8,6 @@
 #include "entity.h"
 #include "cube.h"
 
-# define PI           3.14159265358979323846
-
 Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(new Camera(70, (double)(screenSize.x/screenSize.y), 1, 100))
 {
 	m_test = new Cube(this);
