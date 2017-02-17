@@ -1,8 +1,4 @@
 ﻿  cube.cpp
-g:\documents\julien\projets\c++\opengl\opengl\src\cube.cpp(179): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
-  Génération de code en cours...
-  Ignoré... (aucune modification pertinente détectée)
-  mesh.cpp
-  input.cpp
+g:\documents\julien\projets\c++\opengl\opengl\src\cube.cpp(192): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)

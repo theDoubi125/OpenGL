@@ -112,6 +112,11 @@ glm::vec3 Transform::worldToLocal(glm::vec3 v) const
 	return glm::vec3(result.x / result.w, result.y / result.w, result.z / result.w);
 }
 
+glm::mat4 Transform::rotationMatrix() const
+{
+	return glm::mat4_cast(m_localRot);
+}
+
 Entity::Entity(const Scene *scene) : m_scene(scene), m_shader(new Shader("resources/shaders/shader_base.vert", "resources/shaders/shader_base.frag"))
 {
 

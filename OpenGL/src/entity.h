@@ -41,6 +41,8 @@ public:
 	void translate(const vec3 &v);
 	void scale(const vec3 &v);
 
+	mat4 rotationMatrix() const;
+
 	glm::vec3 worldToLocal(glm::vec3 v) const;
 
 private:

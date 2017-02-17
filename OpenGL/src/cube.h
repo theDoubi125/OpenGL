@@ -52,6 +52,7 @@ public:
 	CubeBehaviour();
 	virtual ~CubeBehaviour();
 	void setStateMachine(StateMachine *machine);
+	virtual void enter() = 0;
 	virtual void update(float deltaTime) = 0;
 protected:
 	StateMachine *m_machine;
@@ -63,6 +64,7 @@ public:
 	IdleBehaviour();
 	virtual ~IdleBehaviour();
 	virtual void update(float deltaTime) override;
+	virtual void enter() override;
 };
 
 class RollingBehaviour : public CubeBehaviour
@@ -71,9 +73,11 @@ public:
 	RollingBehaviour(glm::ivec2 dir);
 	virtual ~RollingBehaviour();
 	virtual void update(float deltaTime) override;
+	virtual void enter() override;
 
 private:
 	glm::ivec2 m_dir;
+	glm::vec4 m_rotCenterLocalPos, m_rotCenterWorldPos;
 	float m_stepDuration, m_stepDist, m_time;
 };
 
