@@ -77,8 +77,9 @@ public:
 
 private:
 	glm::ivec2 m_dir;
-	glm::vec4 m_rotCenterLocalPos, m_rotCenterWorldPos;
+	glm::vec3 m_initalPos, m_rotCenterWorldPos;
 	float m_stepDuration, m_stepDist, m_time;
+	float m_angle;
 };
 
 #endif

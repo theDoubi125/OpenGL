@@ -82,6 +82,7 @@ void StateMachine::pushState(CubeBehaviour *state)
 {
 	state->setStateMachine(this);
 	m_states.push(state);
+	state->enter();
 }
 
 void StateMachine::popState()
@@ -176,17 +177,16 @@ RollingBehaviour::~RollingBehaviour()
 void RollingBehaviour::enter()
 {
 	Transform &transform = m_machine->transform();
-	m_rotCenterLocalPos = glm::inverse(transform.rotationMatrix()) * glm::vec4(0.5, -0.5, 0, 1);
-	vec3 rotCenter = transform.getPosition() + glm::vec3(0.5, -0.5, 0);
-	m_rotCenterWorldPos = vec4(rotCenter.x, rotCenter.y, rotCenter.z, 1);
+	m_initalPos = transform.getPosition();
 }
 
 void RollingBehaviour::update(float deltaTime)
 {
 	deltaTime = min(deltaTime, m_stepDuration-m_time);
+	m_angle = (float)(m_time * PI / 2 / m_stepDuration);
 	glm::vec3 moveDir = glm::vec3(m_dir.x, 0, m_dir.y);
 	Transform &transform = m_machine->transform();
-	transform.translate(moveDir * deltaTime / m_stepDuration * m_stepDist);
+	transform.setPosition(m_initalPos + vec3(-cos(m_angle + PI/4)/2 + cos(PI/4)/2, sin(m_angle + PI / 4)/2- sin(PI / 4) / 2, 0));
 	glm::vec3 rotDir = glm::cross(glm::vec3(0, 1, 0), moveDir);
 	glm::vec3 pos = glm::inverse(transform.rotationMatrix()) * glm::vec4(rotDir.x, rotDir.y, rotDir.z, 1);
 	transform.rotate(pos, deltaTime * PI / 2 / m_stepDuration);

@@ -49,12 +49,11 @@ mat4x4 Transform::getGlobalMatrix() const
 	return m_parent->getGlobalMatrix() * getLocalMatrix();
 }
 
-mat4x4 Transform::getReverseLocalMatrix() const
+mat4x4 Transform::getReverseGlobalMatrix() const
 {
-	mat4 t = glm::translate(mat4(1.0f), -m_localPos);
-	mat4 r = glm::transpose(glm::mat4_cast(m_localRot));
-	mat4 s = glm::scale(mat4(1.0f), vec3(1)/m_localScale);
-	return s * r * t;
+	if (m_parent == NULL)
+		return getReverseLocalMatrix();
+	return getReverseLocalMatrix() * m_parent->getReverseLocalMatrix();
 }
 
 mat4x4 Transform::getLocalMatrix() const
@@ -63,6 +62,45 @@ mat4x4 Transform::getLocalMatrix() const
 	mat4 r = glm::mat4_cast(m_localRot);
 	mat4 s = glm::scale(mat4(1.0f), m_localScale);
 	return t * r * s;
+}
+
+mat4x4 Transform::getReverseLocalMatrix() const
+{
+	mat4 t = glm::translate(mat4(1.0f), -m_localPos);
+	mat4 r = glm::transpose(glm::mat4_cast(m_localRot));
+	mat4 s = glm::scale(mat4(1.0f), vec3(1)/m_localScale);
+	return s * r * t;
+}
+
+mat4 Transform::rotationMatrix() const
+{
+	return glm::mat4_cast(m_localRot);
+}
+
+mat4 Transform::reverseRotationMatrix() const
+{
+
+	return glm::transpose(glm::mat4_cast(m_localRot));
+}
+
+vec3 Transform::worldToLocal(vec3 pos) const
+{
+	return getReverseGlobalMatrix() * vec4(pos.x, pos.y, pos.z, 1);
+}
+
+vec3 Transform::localToWorld(vec3 pos) const
+{
+	return getGlobalMatrix() * vec4(pos.x, pos.y, pos.z, 1);
+}
+
+vec3 Transform::worldToLocalDir(vec3 pos) const
+{
+	return rotationMatrix() * vec4(pos.x, pos.y, pos.z, 1);
+}
+
+vec3 Transform::localToWorldDir(vec3 pos) const
+{
+	return rotationMatrix() * vec4(pos.x, pos.y, pos.z, 1);
 }
 
 const vec3& Transform::getPosition() const
@@ -103,18 +141,6 @@ void Transform::setPosition(const vec3& p)
 void Transform::scale(const vec3 &v)
 {
 	m_localScale *= v;
-}
-
-glm::vec3 Transform::worldToLocal(glm::vec3 v) const
-{
-	glm::vec4 localPos(v.x, v.y, v.z, 1);
-	glm::vec4 result = getGlobalMatrix() * localPos;
-	return glm::vec3(result.x / result.w, result.y / result.w, result.z / result.w);
-}
-
-glm::mat4 Transform::rotationMatrix() const
-{
-	return glm::mat4_cast(m_localRot);
 }
 
 Entity::Entity(const Scene *scene) : m_scene(scene), m_shader(new Shader("resources/shaders/shader_base.vert", "resources/shaders/shader_base.frag"))

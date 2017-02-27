@@ -29,6 +29,17 @@ public:
 	mat4x4 getReverseLocalMatrix() const;
 
 	mat4x4 getGlobalMatrix() const;
+	mat4x4 getReverseGlobalMatrix() const;
+
+	mat4 rotationMatrix() const;
+	mat4 reverseRotationMatrix() const;
+
+	vec3 worldToLocal(vec3 pos) const;
+	vec3 localToWorld(vec3 pos) const;
+
+	// with rotation only
+	vec3 worldToLocalDir(vec3 dir) const;
+	vec3 localToWorldDir(vec3 dir) const;
 
 	void setPosition(const vec3 &p);
 
@@ -40,10 +51,6 @@ public:
 	void rotate(const vec3 &axis, float angle);
 	void translate(const vec3 &v);
 	void scale(const vec3 &v);
-
-	mat4 rotationMatrix() const;
-
-	glm::vec3 worldToLocal(glm::vec3 v) const;
 
 private:
 	vec3 m_localPos;
