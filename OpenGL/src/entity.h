@@ -49,6 +49,7 @@ public:
 	
 	void rotate(const quat &rot);
 	void rotate(const vec3 &axis, float angle);
+	void rotate(const vec3 &center, const vec3 &axis, float angle);
 	void translate(const vec3 &v);
 	void scale(const vec3 &v);
 

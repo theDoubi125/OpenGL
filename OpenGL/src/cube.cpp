@@ -177,19 +177,24 @@ RollingBehaviour::~RollingBehaviour()
 void RollingBehaviour::enter()
 {
 	Transform &transform = m_machine->transform();
-	m_initalPos = transform.getPosition();
+	m_initialPos = transform.getPosition();
+	vec3 dir = normalize(-vec3(m_dir.x, 0, m_dir.y));
+	dir /= 2;
+	dir.y = 0.5;
+	m_rotCenter = inverse(transform.getRotation()) * dir;
+	std::cout << to_string(m_initialPos) << std::endl;
 }
 
 void RollingBehaviour::update(float deltaTime)
 {
 	deltaTime = min(deltaTime, m_stepDuration-m_time);
-	m_angle = (float)(m_time * PI / 2 / m_stepDuration);
-	glm::vec3 moveDir = glm::vec3(m_dir.x, 0, m_dir.y);
+	//m_angle = (float)(m_time * PI / 2 / m_stepDuration);
+	glm::vec3 moveDir = vec3(m_dir.x, 0, m_dir.y);
 	Transform &transform = m_machine->transform();
-	transform.setPosition(m_initalPos + vec3(-cos(m_angle + PI/4)/2 + cos(PI/4)/2, sin(m_angle + PI / 4)/2- sin(PI / 4) / 2, 0));
+	//transform.setPosition(m_initalPos + vec3(-cos(m_angle + PI/4)/2 + cos(PI/4)/2, sin(m_angle + PI / 4)/2- sin(PI / 4) / 2, 0));
 	glm::vec3 rotDir = glm::cross(glm::vec3(0, 1, 0), moveDir);
 	glm::vec3 pos = glm::inverse(transform.rotationMatrix()) * glm::vec4(rotDir.x, rotDir.y, rotDir.z, 1);
-	transform.rotate(pos, deltaTime * PI / 2 / m_stepDuration);
+	transform.rotate(m_rotCenter, pos, deltaTime * PI / 2 / m_stepDuration);
 	//transform.setPosition(m_rotCenterWorldPos + transform.rotationMatrix() * m_rotCenterLocalPos);
 	if (m_time + deltaTime >= m_stepDuration)
 		m_machine->popState();

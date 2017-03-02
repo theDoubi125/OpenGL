@@ -1,4 +1,8 @@
-﻿  cube.cpp
-c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\cube.cpp(192): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.exe
-  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)
+﻿  scene.cpp
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(11): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(26): warning C4018: '<' : incompatibilité signed/unsigned
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(33): warning C4018: '<' : incompatibilité signed/unsigned
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(41): warning C4018: '<' : incompatibilité signed/unsigned
+g:\documents\julien\projets\c++\opengl\opengl\src\scene.cpp(53): warning C4018: '<' : incompatibilité signed/unsigned
+  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)

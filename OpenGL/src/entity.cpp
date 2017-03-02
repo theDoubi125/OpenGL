@@ -3,6 +3,7 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include "entity.h"
 #include "shader.h"
@@ -126,6 +127,13 @@ void Transform::rotate(const quat &rot)
 void Transform::rotate(const vec3 &axis, float angle)
 {
 	m_localRot *= angleAxis(angle, axis);
+}
+
+void Transform::rotate(const vec3 &center, const vec3 &axis, float angle)
+{
+	quat deltaRot = angleAxis(angle, axis);
+	m_localPos += m_localRot * (deltaRot * center - center);
+	m_localRot *= deltaRot;
 }
 
 void Transform::translate(const vec3& v)
