@@ -7,12 +7,17 @@
 #include "scene.h"
 #include "entity.h"
 #include "cube.h"
+#include "world.h"
 
-Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(new Camera(70, (double)(screenSize.x/screenSize.y), 1, 100))
+Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(new Camera(70, (float)(screenSize.x/screenSize.y), 1, 100))
 {
 	m_test = new Cube(this);
 	m_test->transform().translate(vec3(0, -1, -5));
 	m_entities.push_back(m_test);
+	World* world = new World(ivec3(5, 5, 5));
+	world->setCell(ivec3(0, 0, 0), CELL_WALL);
+	world->setCell(ivec3(0, 4, 0), CELL_WALL);
+	world->setCell(ivec3(0, 1, 2), CELL_WALL);
 }
 
 Scene::Scene(const Scene &scene)
