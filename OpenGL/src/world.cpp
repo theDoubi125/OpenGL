@@ -4,13 +4,15 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <SOIL.h>
 
 #include "entity.h"
 #include "shader.h"
 #include "scene.h"
 #include "world.h"
+#include "mesh.h"
 
-World::World(ivec3 dim) : m_dim(dim), m_cells(new CellType[dim.x * dim.y * dim.z])
+World::World(Scene* scene, ivec3 dim) : Entity(scene), m_dim(dim), m_cells(new CellType[dim.x * dim.y * dim.z])
 {
 	for (int i = 0; i < dim.x * dim.y * dim.z; i++)
 		m_cells[i] = CELL_AIR;
@@ -62,20 +64,39 @@ int World::posToId(ivec3 pos) const
 
 void World::init()
 {
-
+	Entity::init();
+	for (int i = 1; i < CELL_LAST; i++)
+	{
+		m_cellMeshes[i]->init();
+	}
+	m_texture = SOIL_load_OGL_texture
+	(
+		"resources/img/box.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	if (0 == m_texture)
+	{
+		printf("SOIL loading error: '%s'\n", SOIL_last_result());
+	}
 }
 
 void World::update(float deltaTime)
 {
-
+	Entity::update(deltaTime);
 }
 
 void World::render() const
 {
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+
+	//Entity::render();
 	for (int i = 1; i < CELL_LAST; i++)
 	{
 		m_cellMeshes[i]->render();
 	}
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 std::vector<ivec3> World::getOccurences(CellType cellType) const
@@ -100,12 +121,12 @@ void WorldMesh::init()
 
 	float vertexModel[72]
 	{
-		-0.5, -0.5, -0.5,  0.5, -0.5, -0.5,  0.5, 0.5, -0.5,  -0.5, 0.5, -0.5,
-		-0.5, -0.5, 0.5,  0.5, -0.5, 0.5,  0.5, 0.5, 0.5,  -0.5, 0.5, 0.5,
-		-0.5, -0.5, -0.5,  0.5, -0.5, -0.5,  0.5, -0.5, 0.5,  -0.5, -0.5, 0.5,
-		-0.5, 0.5, -0.5,  0.5, 0.5, -0.5,  0.5, 0.5, 0.5,  -0.5, 0.5, 0.5,
-		-0.5, -0.5, -0.5,  -0.5, -0.5, 0.5,  -0.5, 0.5, 0.5,  -0.5, 0.5, -0.5,
-		0.5, -0.5, -0.5,  0.5, -0.5, 0.5,  0.5, 0.5, 0.5,  0.5, 0.5, -0.5,
+		-0.5, -0.5, -0.5,	-0.5, 0.5, -0.5,	0.5, 0.5, -0.5,		0.5, -0.5, -0.5,
+		-0.5, -0.5, 0.5,	0.5, -0.5, 0.5,		0.5, 0.5, 0.5,		-0.5, 0.5, 0.5,
+		-0.5, -0.5, -0.5,	0.5, -0.5, -0.5,	0.5, -0.5, 0.5,		-0.5, -0.5, 0.5,
+		-0.5, 0.5, -0.5,	-0.5, 0.5, 0.5,		0.5, 0.5, 0.5,		0.5, 0.5, -0.5,
+		-0.5, -0.5, -0.5,	-0.5, -0.5, 0.5,	-0.5, 0.5, 0.5,		-0.5, 0.5, -0.5,
+		0.5, -0.5, -0.5,	0.5, 0.5, -0.5,		0.5, 0.5, 0.5,		0.5, -0.5, 0.5
 	};
 	float textCoordModel[48]
 	{
@@ -117,17 +138,46 @@ void WorldMesh::init()
 		0, 0,   1, 0,  1, 1,  0, 1,
 	};
 
-	m_verticeCount = pos.size() * 24;
-	m_vertices = new float[72 * pos.size()];
-	m_textCoords = new float[48 * pos.size()];
+	ivec3 dirVecs[] = { ivec3(0, 0, -1), ivec3(0, 0, 1), ivec3(0, -1, 0), ivec3(0, 1, 0), ivec3(-1, 0, 0), ivec3(1, 0, 0) };
 
+	int faceCount = 0;
+	int jmin = 0;
+	int jmax = 6;
 	for (int i = 0; i < pos.size(); i++)
 	{
-		for (int j = 0; j < 72; j++)
-			m_vertices[i * 72 + j] = vertexModel[j];
-		for (int j = 0; j < 48; j++)
-			m_textCoords[i * 48 + j];
+		for (int j = jmin; j < jmax; j++)
+		{
+			if (m_world.getCell(pos[i] + dirVecs[j]) != m_cellType)
+			{
+				faceCount ++;
+			}
+		}
 	}
+	m_verticeCount = faceCount * 4;
+	m_vertices = new float[m_verticeCount * 3];
+	m_textCoords = new float[m_verticeCount * 2];
+
+	int currentFace = 0;
+	for (int i = 0; i < pos.size(); i++)
+	{
+		for (int j = jmin; j < jmax; j++)
+		{
+			if (m_world.getCell(pos[i] + dirVecs[j]) != m_cellType)
+			{
+				for (int k = 0; k < 4; k++)
+				{
+					m_vertices[currentFace * 12 + k * 3] = vertexModel[12 * j + k * 3] + pos[i].x;
+					m_vertices[currentFace * 12 + k * 3 + 1] = vertexModel[12 * j + k * 3 + 1] + pos[i].y;
+					m_vertices[currentFace * 12 + k * 3 + 2] = vertexModel[12 * j + k * 3 + 2] + pos[i].z;
+
+					m_textCoords[currentFace * 8 + k * 2] = textCoordModel[8 * j + k * 2];
+					m_textCoords[currentFace * 8 + k * 2 + 1] = textCoordModel[8 * j + k * 2 + 1];
+				}
+				currentFace++;
+			}
+		}
+	}
+	Mesh::init();
 }
 
 int WorldMesh::vertexCount() const

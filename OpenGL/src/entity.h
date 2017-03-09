@@ -71,6 +71,9 @@ public:
 	virtual void update(float deltaTime);
 	virtual void render() const;
 
+	void preRender() const;
+	void postRender() const;
+
 	Transform& transform();
 	const Transform& transform() const;
 

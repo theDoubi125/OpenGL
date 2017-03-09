@@ -4,6 +4,7 @@
 #include <vector>
 #include <glm/vec2.hpp>
 
+class World;
 class Shader;
 class GameEntity
 {
@@ -38,6 +39,7 @@ private:
 	Entity* m_test;
 	Camera* m_camera;
 	float m_time;
+	World *m_world;
 };
 
 class Transform;

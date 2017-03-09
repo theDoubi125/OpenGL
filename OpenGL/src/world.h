@@ -15,10 +15,10 @@ enum CellType
 };
 
 class WorldMesh;
-class World : public GameEntity
+class World : public Entity
 {
 public:
-	World(ivec3 dim);
+	World(Scene* scene, ivec3 dim);
 	~World();
 
 	void setCell(ivec3 pos, CellType cell);
@@ -40,6 +40,7 @@ private:
 	std::vector<ivec3>* m_occurences;
 	Mesh** m_cellMeshes;
 	CellType* m_cells;
+	GLuint m_texture;
 };
 
 class WorldMesh : public Mesh

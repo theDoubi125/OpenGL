@@ -46,9 +46,7 @@ void Cube::init()
 
 void Cube::render() const
 {
-	mat4 transformMatrix = transform().getGlobalMatrix();
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-	
 	Entity::render();
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

@@ -1,4 +1,3 @@
-﻿  world.cpp
-g:\documents\julien\projets\c++\opengl\opengl\src\world.cpp(124): warning C4018: '<' : incompatibilité signed/unsigned
+﻿  mesh.cpp
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)

@@ -172,10 +172,17 @@ void Entity::init()
 	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
 	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
 	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
-	m_mesh->init();
+	if(m_mesh != NULL)
+		m_mesh->init();
 }
 
 void Entity::render() const
+{
+	if (m_mesh != NULL)
+		m_mesh->render();
+}
+
+void Entity::preRender() const
 {
 	glEnable(GL_DEPTH_TEST);
 	glUseProgram(m_shader->getProgramId());
@@ -183,7 +190,11 @@ void Entity::render() const
 	mat4 viewMatrix = scene().viewMatrix();
 	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(m_projMatrixId, 1, GL_FALSE, glm::value_ptr(scene().projectionMatrix()));
-	m_mesh->render();
+
+}
+
+void Entity::postRender() const
+{
 	glUseProgram(0);
 }
 
