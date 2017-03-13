@@ -26,10 +26,10 @@ Cube::~Cube()
 	delete m_stateMachine;
 }
 
-void Cube::init()
+void Cube::init(Json::Value descr)
 {
 	setMesh(new CubeMesh());
-	Entity::init();
+	Entity::init(descr);
 	m_texture = SOIL_load_OGL_texture
 	(
 		"resources/img/box.png",

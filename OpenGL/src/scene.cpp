@@ -35,7 +35,7 @@ Scene::~Scene()
 		delete m_entities[i];
 }
 
-void Scene::init()
+void Scene::init(Json::Value descr)
 {
 	glEnable(GL_TEXTURE_2D);
 	m_world->setCell(ivec3(1, 0, 1), CELL_WALL);
@@ -46,7 +46,7 @@ void Scene::init()
 	}
 	for (int i = 0; i < m_entities.size(); i++)
 	{
-		m_entities[i]->init();
+		m_entities[i]->init(descr);
 	}
 }
 

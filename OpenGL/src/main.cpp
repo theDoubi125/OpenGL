@@ -6,6 +6,10 @@
 #include <glm/vec3.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <fstream>
+
+#include "json/json.h"
+#include <json.hpp>
 
 #include "shader.h"
 #include "scene.h"
@@ -13,6 +17,7 @@
 #include "input.h"
 
 using namespace std;
+using json = nlohmann::json;
 
 Shader *basicShader;
 Scene* scene;
@@ -79,15 +84,19 @@ int main(int argc, char* argv[])
 			fprintf(stderr, "GLEW error");
 			return 1;
 		}
-		scene->init();
+		scene->init(Json::Value());
 	}
 	catch (std::exception& e)
 	{
 		std::cout << "Exception " << e.what() << std::endl;
 	}
+	std::ifstream myfile("resources/configs/scenes/mainScene.json");
+	json test;
+	myfile >> test;
+
+	std::cout << test << std::endl;
 
 	glutMainLoop();
-
 
 	delete basicShader;
 	return 0;

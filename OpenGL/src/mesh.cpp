@@ -21,7 +21,7 @@ Mesh::~Mesh()
 	glDeleteBuffers(1, &m_vboId);
 }
 
-void Mesh::init()
+void Mesh::init(Json::Value descr)
 {
 	if (glIsBuffer(m_vboId) == GL_TRUE)
 		glDeleteBuffers(1, &m_vboId);
@@ -60,7 +60,7 @@ CubeMesh::~CubeMesh()
 	delete[] m_textCoords;
 }
 
-void CubeMesh::init()
+void CubeMesh::init(Json::Value descr)
 {
 	m_vertices = new float[72]
 	{
@@ -81,7 +81,7 @@ void CubeMesh::init()
 		0, 0,   1, 0,  1, 1,  0, 1,
 	};
 
-	Mesh::init();
+	Mesh::init(descr);
 }
 
 int CubeMesh::vertexCount() const

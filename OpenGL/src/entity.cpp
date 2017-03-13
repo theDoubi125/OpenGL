@@ -166,14 +166,14 @@ Entity::~Entity()
 	delete m_shader;
 }
 
-void Entity::init()
+void Entity::init(Json::Value descr)
 {
 	m_shader->load();
 	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
 	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
 	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
 	if(m_mesh != NULL)
-		m_mesh->init();
+		m_mesh->init(descr);
 }
 
 void Entity::render() const

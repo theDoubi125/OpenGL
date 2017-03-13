@@ -24,7 +24,7 @@ public:
 	void setCell(ivec3 pos, CellType cell);
 	const CellType getCell(ivec3 pos) const;
 
-	virtual void init() override;
+	virtual void init(Json::Value descr) override;
 	virtual void update(float deltaTime) override;
 	virtual void render() const override;
 
@@ -49,7 +49,7 @@ public:
 	WorldMesh(const World &world, CellType type);
 	virtual ~WorldMesh();
 
-	virtual void init() override;
+	virtual void init(Json::Value descr) override;
 	virtual int vertexCount() const override;
 	virtual float* getVertex() const override;
 	virtual float* getTexCoords() const override;

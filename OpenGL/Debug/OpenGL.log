@@ -1,3 +1,8 @@
-﻿  mesh.cpp
+﻿  main.cpp
+g:\documents\julien\projets\c++\opengl\opengl\src\main.cpp(41): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu Ûtre trouvÚ avec 'SOIL.lib(image_DXT.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb'á; l'objet sera liÚ sans informations de dÚbogage
+SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu Ûtre trouvÚ avec 'SOIL.lib(image_helper.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb'á; l'objet sera liÚ sans informations de dÚbogage
+SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu Ûtre trouvÚ avec 'SOIL.lib(SOIL.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb'á; l'objet sera liÚ sans informations de dÚbogage
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu Ûtre trouvÚ avec 'SOIL.lib(stb_image_aug.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb'á; l'objet sera liÚ sans informations de dÚbogage
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)

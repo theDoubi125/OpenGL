@@ -62,12 +62,12 @@ int World::posToId(ivec3 pos) const
 	else return -1;
 }
 
-void World::init()
+void World::init(Json::Value descr)
 {
-	Entity::init();
+	Entity::init(Json::Value());
 	for (int i = 1; i < CELL_LAST; i++)
 	{
-		m_cellMeshes[i]->init();
+		m_cellMeshes[i]->init(descr);
 	}
 	m_texture = SOIL_load_OGL_texture
 	(
@@ -115,7 +115,7 @@ WorldMesh::~WorldMesh()
 	delete[] m_textCoords;
 }
 
-void WorldMesh::init()
+void WorldMesh::init(Json::Value descr)
 {
 	std::vector<ivec3> pos = m_world.getOccurences(m_cellType);
 
@@ -177,7 +177,7 @@ void WorldMesh::init()
 			}
 		}
 	}
-	Mesh::init();
+	Mesh::init(descr);
 }
 
 int WorldMesh::vertexCount() const

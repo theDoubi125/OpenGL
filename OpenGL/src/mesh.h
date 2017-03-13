@@ -8,7 +8,7 @@ public:
 	Mesh();
 	virtual ~Mesh();
 
-	virtual void init();
+	virtual void init(Json::Value descr);
 
 	virtual int vertexCount() const = 0;
 	virtual float* getVertex() const = 0;
@@ -27,7 +27,7 @@ public:
 	CubeMesh();
 	virtual ~CubeMesh();
 
-	virtual void init() override;
+	virtual void init(Json::Value descr) override;
 	virtual int vertexCount() const override;
 	virtual float* getVertex() const override;
 	virtual float* getTexCoords() const override;

@@ -6,6 +6,7 @@
 #include <glm\mat4x4.hpp>
 #include <glm\gtc\quaternion.hpp>
 #include <iostream>
+#include "json/json.h"
 
 #include "mesh.h"
 # define PI           3.14159265358979323846
@@ -67,7 +68,7 @@ public:
 	Entity(const Entity& model);
 	virtual ~Entity();
 
-	virtual void init();
+	virtual void init(Json::Value descr);
 	virtual void update(float deltaTime);
 	virtual void render() const;
 
@@ -90,6 +91,24 @@ private:
 	Shader* m_shader;
 	Mesh* m_mesh;
 	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
+};
+
+class Component
+{
+public:
+	Component()
+	{
+
+	}
+
+	virtual ~Component()
+	{
+
+	}
+
+	virtual void init(Json::Value descr) = 0;
+	virtual void update(float deltaTime) = 0;
+	virtual void render() const = 0;
 };
 
 #endif
