@@ -68,7 +68,8 @@ public:
 	Entity(const Entity& model);
 	virtual ~Entity();
 
-	virtual void init(Json::Value descr);
+	virtual void init(json descr);
+	virtual void start();
 	virtual void update(float deltaTime);
 	virtual void render() const;
 
@@ -96,19 +97,18 @@ private:
 class Component
 {
 public:
-	Component()
-	{
-
-	}
-
-	virtual ~Component()
-	{
-
-	}
-
-	virtual void init(Json::Value descr) = 0;
+	virtual void init(json descr) = 0;
+	virtual void start() = 0;
 	virtual void update(float deltaTime) = 0;
 	virtual void render() const = 0;
+	virtual Component* clone() const = 0;
+
+protected:
+	static void RegisterComponent(std::string name, Component* model);
+	static Component* CreateComponent(std::string name);
+
+private:
+	static std::map<std::string, Component*> m_componentModels;
 };
 
 #endif

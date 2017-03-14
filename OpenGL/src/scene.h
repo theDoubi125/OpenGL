@@ -3,14 +3,16 @@
 
 #include <vector>
 #include <glm/vec2.hpp>
-#include "json\json.h"
+#include <json.hpp>
+
+using json = nlohmann::json;
 
 class World;
 class Shader;
 class GameEntity
 {
 public:
-	virtual void init(Json::Value descr) = 0;
+	virtual void init(json descr) = 0;
 	virtual void update(float deltaTime) = 0;
 	virtual void render() const = 0;
 };
@@ -26,7 +28,7 @@ public:
 
 	virtual void update(float deltaTime);
 	virtual void render() const;
-	virtual void init(Json::Value descr);
+	virtual void init(json descr);
 	void onResize(glm::vec2 screenSize);
 
 	glm::vec2 screenSize() const;

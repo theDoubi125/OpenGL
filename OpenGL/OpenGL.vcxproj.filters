@@ -26,9 +26,6 @@
     <Filter Include="src\world">
       <UniqueIdentifier>{0aafea61-139b-4311-9779-b84451d57964}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\util\json">
-      <UniqueIdentifier>{35b8e651-1b11-48ec-84df-83bb83030d57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\util\input">
       <UniqueIdentifier>{70662f25-2cf2-4c49-8efb-b8a2783d8350}</UniqueIdentifier>
     </Filter>
@@ -58,9 +55,6 @@
     <ClCompile Include="src\input.cpp">
       <Filter>src\util\input</Filter>
     </ClCompile>
-    <ClCompile Include="src\jsoncpp.cpp">
-      <Filter>src\util\json</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -83,12 +77,6 @@
     </ClInclude>
     <ClInclude Include="src\input.h">
       <Filter>src\util\input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\json\json.h">
-      <Filter>src\util\json</Filter>
-    </ClInclude>
-    <ClInclude Include="src\json\json-forwards.h">
-      <Filter>src\util\json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

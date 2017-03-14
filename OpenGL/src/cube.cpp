@@ -26,7 +26,7 @@ Cube::~Cube()
 	delete m_stateMachine;
 }
 
-void Cube::init(Json::Value descr)
+void Cube::init(json descr)
 {
 	setMesh(new CubeMesh());
 	Entity::init(descr);

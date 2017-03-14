@@ -2,12 +2,14 @@
 #include <GL\freeglut.h>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <json.hpp>
 
 #include "shader.h"
 #include "scene.h"
 #include "entity.h"
 #include "cube.h"
 #include "world.h"
+
 
 Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(new Camera(70, (float)(screenSize.x/screenSize.y), 1, 100)), m_world(NULL)
 {
@@ -35,7 +37,7 @@ Scene::~Scene()
 		delete m_entities[i];
 }
 
-void Scene::init(Json::Value descr)
+void Scene::init(json descr)
 {
 	glEnable(GL_TEXTURE_2D);
 	m_world->setCell(ivec3(1, 0, 1), CELL_WALL);
@@ -44,6 +46,12 @@ void Scene::init(Json::Value descr)
 		m_world->setCell(ivec3(i, 0, 0), CELL_WALL);
 		m_world->setCell(ivec3(i, 1, 0), CELL_WALL);
 	}
+	
+//	for (json::iterator it = descr.begin(); it != descr.end(); ++it)
+//	{
+
+//	}
+
 	for (int i = 0; i < m_entities.size(); i++)
 	{
 		m_entities[i]->init(descr);

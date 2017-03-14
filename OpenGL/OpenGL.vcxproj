@@ -22,7 +22,6 @@
     <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\input.cpp" />
-    <ClCompile Include="src\jsoncpp.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mesh.cpp" />
     <ClCompile Include="src\scene.cpp" />
@@ -33,8 +32,6 @@
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\input.h" />
-    <ClInclude Include="src\json\json-forwards.h" />
-    <ClInclude Include="src\json\json.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\shader.h" />
@@ -96,7 +93,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>G:\Documents\Julien\Projets\C++\OpenGL\libs\json;..\libs\soil\src;..\libs\glm;..\libs\glew-2.0.0\include;..\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\json;..\libs\soil\src;..\libs\glm;..\libs\glew-2.0.0\include;..\libs\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\libs\soil\lib;..\libs\glew-2.0.0\lib\Release\Win32;..\libs\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

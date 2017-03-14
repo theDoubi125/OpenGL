@@ -8,6 +8,8 @@
 #include "entity.h"
 #include "shader.h"
 
+std::map<std::string, Component*> Component::m_componentModels;
+
 Transform::Transform() : m_localRot(), m_localPos(0, 0, 0), m_localScale(1, 1, 1), m_parent(NULL)
 {
 
@@ -166,7 +168,7 @@ Entity::~Entity()
 	delete m_shader;
 }
 
-void Entity::init(Json::Value descr)
+void Entity::init(json descr)
 {
 	m_shader->load();
 	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
@@ -174,6 +176,11 @@ void Entity::init(Json::Value descr)
 	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
 	if(m_mesh != NULL)
 		m_mesh->init(descr);
+}
+
+void Entity::start()
+{
+
 }
 
 void Entity::render() const
@@ -226,4 +233,18 @@ const Scene& Entity::scene() const
 void Entity::setMesh(Mesh *mesh)
 {
 	m_mesh = mesh;
+}
+
+void Component::RegisterComponent(std::string name, Component* model)
+{
+	m_componentModels[name] = model;
+}
+
+Component* Component::CreateComponent(std::string name)
+{
+	if (m_componentModels.count(name) > 0)
+	{
+		return m_componentModels[name]->clone();
+	}
+	return NULL;
 }

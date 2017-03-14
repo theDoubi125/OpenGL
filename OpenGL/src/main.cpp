@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 			fprintf(stderr, "GLEW error");
 			return 1;
 		}
-		scene->init(Json::Value());
+		scene->init(json());
 	}
 	catch (std::exception& e)
 	{

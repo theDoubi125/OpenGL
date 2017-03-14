@@ -62,9 +62,9 @@ int World::posToId(ivec3 pos) const
 	else return -1;
 }
 
-void World::init(Json::Value descr)
+void World::init(json descr)
 {
-	Entity::init(Json::Value());
+	Entity::init(json());
 	for (int i = 1; i < CELL_LAST; i++)
 	{
 		m_cellMeshes[i]->init(descr);
@@ -115,7 +115,7 @@ WorldMesh::~WorldMesh()
 	delete[] m_textCoords;
 }
 
-void WorldMesh::init(Json::Value descr)
+void WorldMesh::init(json descr)
 {
 	std::vector<ivec3> pos = m_world.getOccurences(m_cellType);
 

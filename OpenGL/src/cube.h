@@ -12,7 +12,7 @@ public:
 	Cube(const Cube &model);
 	~Cube();
 
-	virtual void init(Json::Value descr) override;
+	virtual void init(json descr) override;
 	virtual void render() const override;
 	virtual void update(float deltaTime) override;
 	void setBehaviour(CubeBehaviour *behaviour);

@@ -1,6 +1,13 @@
 {
-	"blabla": {
-		"gna ?" : 5,
-		"bla" : "test"
-	}
+  "Cube": 
+  {
+    "Transform": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "Cube": {
+      
+    }
+  }
 }
