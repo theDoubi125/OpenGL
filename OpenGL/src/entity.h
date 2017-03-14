@@ -92,23 +92,8 @@ private:
 	Shader* m_shader;
 	Mesh* m_mesh;
 	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
-};
 
-class Component
-{
-public:
-	virtual void init(json descr) = 0;
-	virtual void start() = 0;
-	virtual void update(float deltaTime) = 0;
-	virtual void render() const = 0;
-	virtual Component* clone() const = 0;
-
-protected:
-	static void RegisterComponent(std::string name, Component* model);
-	static Component* CreateComponent(std::string name);
-
-private:
-	static std::map<std::string, Component*> m_componentModels;
+	std::vector<Component*> m_components;
 };
 
 #endif

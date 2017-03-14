@@ -3,6 +3,7 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <json.hpp>
+#include <fstream>
 
 #include "shader.h"
 #include "scene.h"
@@ -13,7 +14,7 @@
 
 Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(new Camera(70, (float)(screenSize.x/screenSize.y), 1, 100)), m_world(NULL)
 {
-	m_test = new Cube(this);
+	/*m_test = new Cube(this);
 	m_test->transform().translate(vec3(0, -1, -5));
 	m_entities.push_back(m_test);
 	m_test = new Cube(this);
@@ -21,7 +22,7 @@ Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(ne
 	m_entities.push_back(m_test);
 	m_world = new World(this, ivec3(5, 5, 5));
 	m_world->transform().translate(vec3(0, 0, -4));
-	m_entities.push_back(m_world);
+	m_entities.push_back(m_world);*/
 	m_camera->transform().setPosition(vec3(-10, 0, 0));
 }
 
@@ -37,24 +38,33 @@ Scene::~Scene()
 		delete m_entities[i];
 }
 
-void Scene::init(json descr)
+void Scene::init(json desc)
 {
 	glEnable(GL_TEXTURE_2D);
-	m_world->setCell(ivec3(1, 0, 1), CELL_WALL);
+	/*m_world->setCell(ivec3(1, 0, 1), CELL_WALL);
 	for (int i = 1; i < 3; i++)
 	{
 		m_world->setCell(ivec3(i, 0, 0), CELL_WALL);
 		m_world->setCell(ivec3(i, 1, 0), CELL_WALL);
-	}
+	}*/
+
+	std::cout << desc << std::endl;
 	
 //	for (json::iterator it = descr.begin(); it != descr.end(); ++it)
 //	{
 
 //	}
 
+	for (json::iterator it = desc.begin(); it != desc.end(); it++)
+	{
+		Entity* entity = new Entity(this);
+		entity->init(*it);
+		m_entities.push_back(entity);
+	}
+
 	for (int i = 0; i < m_entities.size(); i++)
 	{
-		m_entities[i]->init(descr);
+		//m_entities[i]->init(desc);
 	}
 }
 
@@ -65,7 +75,7 @@ void Scene::update(float deltaTime)
 
 	m_time += deltaTime;
 	m_camera->transform().setPosition(vec3(3, 2, 2));
-	m_camera->transform().rotate(vec3(0, 1, 0), deltaTime);
+	//m_camera->transform().rotate(vec3(0, 1, 0), deltaTime);
 }
 
 void Scene::render() const

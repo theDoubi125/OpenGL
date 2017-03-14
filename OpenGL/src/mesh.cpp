@@ -10,6 +10,7 @@
 #ifndef BUFFER_OFFSET
 #define BUFFER_OFFSET(offset) ((char*)NULL + (offset))
 #endif
+std::map<std::string, Mesh*> Mesh::m_registeredMeshes;
 
 Mesh::Mesh() : m_vboId(0)
 {
@@ -47,6 +48,21 @@ void Mesh::render() const
 	glDrawArrays(GL_QUADS, 0, vertexCount());
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+}
+
+void Mesh::registerMesh(std::string name, Mesh* mesh)
+{
+	m_registeredMeshes[name] = mesh;
+}
+
+void Mesh::registerMeshes()
+{
+	registerMesh("Cube", new CubeMesh());
+}
+
+Mesh* Mesh::getRegisteredMesh(std::string name)
+{
+	return m_registeredMeshes[name];
 }
 
 CubeMesh::CubeMesh()
@@ -99,9 +115,20 @@ float* CubeMesh::getTexCoords() const
 	return m_textCoords;
 }
 
-void MeshRenderer::init(json descr)
+MeshRenderer::MeshRenderer(Entity* entity) : Component(entity)
 {
 
+}
+
+MeshRenderer::~MeshRenderer()
+{
+
+}
+
+void MeshRenderer::init(json descr)
+{
+	m_mesh = Mesh::getRegisteredMesh(descr["Mesh"]);
+	m_mesh->init(descr);
 }
 
 void MeshRenderer::start()
@@ -116,10 +143,10 @@ void MeshRenderer::update(float deltaTime)
 
 void MeshRenderer::render() const
 {
-
+	m_mesh->render();
 }
 
-Component* MeshRenderer::clone() const
+Component* MeshRenderer::createInstance(Entity* entity) const
 {
-	return new MeshRenderer();
+	return new MeshRenderer(entity);
 }

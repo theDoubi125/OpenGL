@@ -55,6 +55,9 @@
     <ClCompile Include="src\input.cpp">
       <Filter>src\util\input</Filter>
     </ClCompile>
+    <ClCompile Include="src\component.cpp">
+      <Filter>src\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -77,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="src\input.h">
       <Filter>src\util\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\component.h">
+      <Filter>src\entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

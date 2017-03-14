@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\input.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="src\world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\component.h" />
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\input.h" />

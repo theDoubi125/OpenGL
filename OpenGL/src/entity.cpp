@@ -8,8 +8,6 @@
 #include "entity.h"
 #include "shader.h"
 
-std::map<std::string, Component*> Component::m_componentModels;
-
 Transform::Transform() : m_localRot(), m_localPos(0, 0, 0), m_localScale(1, 1, 1), m_parent(NULL)
 {
 
@@ -174,19 +172,28 @@ void Entity::init(json descr)
 	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
 	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
 	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
+	for(json::iterator it = descr.begin(); it != descr.end(); ++it)
+	{
+		Component* component = Component::createComponent(it.key(), this);
+		component->init(it.value());
+		m_components.push_back(component);
+	}
 	if(m_mesh != NULL)
 		m_mesh->init(descr);
 }
 
 void Entity::start()
 {
-
+	for (int i = 0; i < m_components.size(); i++)
+		m_components[i]->start();
 }
 
 void Entity::render() const
 {
-	if (m_mesh != NULL)
-		m_mesh->render();
+	//if (m_mesh != NULL)
+	//	m_mesh->render();
+	for (int i = 0; i < m_components.size(); i++)
+		m_components[i]->render();
 }
 
 void Entity::preRender() const
@@ -207,7 +214,8 @@ void Entity::postRender() const
 
 void Entity::update(float deltaTime)
 {
-
+	for (int i = 0; i < m_components.size(); i++)
+		m_components[i]->update(deltaTime);
 }
 
 Transform& Entity::transform()
@@ -233,18 +241,4 @@ const Scene& Entity::scene() const
 void Entity::setMesh(Mesh *mesh)
 {
 	m_mesh = mesh;
-}
-
-void Component::RegisterComponent(std::string name, Component* model)
-{
-	m_componentModels[name] = model;
-}
-
-Component* Component::CreateComponent(std::string name)
-{
-	if (m_componentModels.count(name) > 0)
-	{
-		return m_componentModels[name]->clone();
-	}
-	return NULL;
 }

@@ -76,6 +76,9 @@ int main(int argc, char* argv[])
 		glutSpecialFunc(onSpecialKeyDown);
 		glutSpecialUpFunc(onSpecialKeyUp);
 
+		Mesh::registerMeshes();
+		Component::registerComponents();
+
 		scene = new Scene(vec2(800, 600));
 
 		GLenum err = glewInit();
@@ -84,17 +87,15 @@ int main(int argc, char* argv[])
 			fprintf(stderr, "GLEW error");
 			return 1;
 		}
-		scene->init(json());
+		std::ifstream myfile("resources/configs/scenes/mainScene.json");
+		json screneDesc;
+		myfile >> screneDesc;
+		scene->init(screneDesc);
 	}
 	catch (std::exception& e)
 	{
 		std::cout << "Exception " << e.what() << std::endl;
 	}
-	std::ifstream myfile("resources/configs/scenes/mainScene.json");
-	json test;
-	myfile >> test;
-
-	std::cout << test << std::endl;
 
 	glutMainLoop();
 
