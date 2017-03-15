@@ -3,6 +3,7 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <SOIL.h>
 
 #include "shader.h"
 #include "mesh.h"
@@ -129,6 +130,14 @@ void MeshRenderer::init(json descr)
 {
 	m_mesh = Mesh::getRegisteredMesh(descr["Mesh"]);
 	m_mesh->init(descr);
+
+	m_texture = SOIL_load_OGL_texture
+	(
+		"resources/img/box.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
 }
 
 void MeshRenderer::start()
@@ -143,7 +152,9 @@ void MeshRenderer::update(float deltaTime)
 
 void MeshRenderer::render() const
 {
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 	m_mesh->render();
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 Component* MeshRenderer::createInstance(Entity* entity) const

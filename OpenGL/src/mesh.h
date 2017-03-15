@@ -41,6 +41,7 @@ public:
 
 private:
 	Mesh* m_mesh;
+	GLuint m_texture;
 };
 
 class CubeMesh : public Mesh

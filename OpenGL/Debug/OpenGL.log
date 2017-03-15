@@ -1,3 +1,6 @@
-﻿  mesh.cpp
+﻿SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(image_DXT.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
+SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(image_helper.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
+SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(SOIL.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(stb_image_aug.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
   OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)

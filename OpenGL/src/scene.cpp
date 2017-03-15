@@ -23,7 +23,7 @@ Scene::Scene(vec2 screenSize) : m_time(0), m_screenSize(screenSize), m_camera(ne
 	m_world = new World(this, ivec3(5, 5, 5));
 	m_world->transform().translate(vec3(0, 0, -4));
 	m_entities.push_back(m_world);*/
-	m_camera->transform().setPosition(vec3(-10, 0, 0));
+	m_camera->transform().setPosition(vec3(0, 0, 0));
 }
 
 Scene::Scene(const Scene &scene)
@@ -48,7 +48,7 @@ void Scene::init(json desc)
 		m_world->setCell(ivec3(i, 1, 0), CELL_WALL);
 	}*/
 
-	std::cout << desc << std::endl;
+	std::cout << to_string(m_camera->projectionMatrix()) << std::endl;
 	
 //	for (json::iterator it = descr.begin(); it != descr.end(); ++it)
 //	{
@@ -59,6 +59,7 @@ void Scene::init(json desc)
 	{
 		Entity* entity = new Entity(this);
 		entity->init(*it);
+		entity->transform().translate(vec3(0, 0, -10));
 		m_entities.push_back(entity);
 	}
 
@@ -74,7 +75,7 @@ void Scene::update(float deltaTime)
 		m_entities[i]->update(deltaTime);
 
 	m_time += deltaTime;
-	m_camera->transform().setPosition(vec3(3, 2, 2));
+	m_camera->transform().setPosition(vec3(0, 0, 0));
 	//m_camera->transform().rotate(vec3(0, 1, 0), deltaTime);
 }
 
