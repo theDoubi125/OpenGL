@@ -85,4 +85,7 @@
       <Filter>src\entity</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\configs\scenes\mainScene.json" />
+  </ItemGroup>
 </Project>

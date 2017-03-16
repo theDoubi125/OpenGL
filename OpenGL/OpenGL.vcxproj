@@ -39,6 +39,9 @@
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\world.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\configs\scenes\mainScene.json" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{099C103F-8B38-4662-BE48-7B4FCE077F6A}</ProjectGuid>
     <RootNamespace>OpenGL</RootNamespace>

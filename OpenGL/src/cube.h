@@ -24,6 +24,22 @@ private:
 	StateMachine *m_stateMachine;
 };
 
+class CubeComponent : public Component
+{
+public:
+	CubeComponent(Entity* entity);
+	~CubeComponent();
+
+	virtual void init(json descr) override;
+	virtual void start() override;
+	virtual void update(float deltaTime) override;
+	virtual void render() const override;
+	virtual Component* createInstance(Entity* entity) const override;
+
+private:
+	StateMachine *m_stateMachine;
+};
+
 class CubeBehaviour;
 class StateMachine
 {

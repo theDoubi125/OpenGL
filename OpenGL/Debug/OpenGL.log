@@ -1,6 +1,6 @@
-﻿SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(image_DXT.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
-SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(image_helper.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
-SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(SOIL.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
-SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'SOIL.pdb' n'a pu être trouvé avec 'SOIL.lib(stb_image_aug.obj)' ou sur 'G:\Documents\Julien\Projets\C++\OpenGL\Debug\SOIL.pdb' ; l'objet sera lié sans informations de débogage
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)
+﻿  entity.cpp
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\entity.cpp(200): warning C4018: '<': signed/unsigned mismatch
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\entity.cpp(208): warning C4018: '<': signed/unsigned mismatch
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\entity.cpp(230): warning C4018: '<': signed/unsigned mismatch
+  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)

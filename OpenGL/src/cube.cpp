@@ -62,6 +62,42 @@ void Cube::setBehaviour(CubeBehaviour *behaviour)
 	m_stateMachine->pushState(behaviour);
 }
 
+CubeComponent::CubeComponent(Entity* entity) : Component(entity), m_stateMachine(NULL)
+{
+
+}
+
+CubeComponent::~CubeComponent()
+{
+	delete m_stateMachine;
+}
+
+void CubeComponent::init(json descr)
+{
+	m_stateMachine = new StateMachine(*this, new IdleBehaviour());
+}
+
+void CubeComponent::start()
+{
+
+}
+
+void CubeComponent::update(float deltaTime)
+{
+
+}
+
+void CubeComponent::render() const
+{
+
+}
+
+Component* CubeComponent::createInstance(Entity* entity) const
+{
+
+}
+
+
 StateMachine::StateMachine(Cube &cube, CubeBehaviour *initState) : m_cube(cube)
 {
 	pushState(initState);

@@ -41,19 +41,8 @@ Scene::~Scene()
 void Scene::init(json desc)
 {
 	glEnable(GL_TEXTURE_2D);
-	/*m_world->setCell(ivec3(1, 0, 1), CELL_WALL);
-	for (int i = 1; i < 3; i++)
-	{
-		m_world->setCell(ivec3(i, 0, 0), CELL_WALL);
-		m_world->setCell(ivec3(i, 1, 0), CELL_WALL);
-	}*/
 
 	std::cout << to_string(m_camera->projectionMatrix()) << std::endl;
-	
-//	for (json::iterator it = descr.begin(); it != descr.end(); ++it)
-//	{
-
-//	}
 
 	for (json::iterator it = desc.begin(); it != desc.end(); it++)
 	{
@@ -61,11 +50,6 @@ void Scene::init(json desc)
 		entity->init(*it);
 		entity->transform().translate(vec3(0, 0, -10));
 		m_entities.push_back(entity);
-	}
-
-	for (int i = 0; i < m_entities.size(); i++)
-	{
-		//m_entities[i]->init(desc);
 	}
 }
 
@@ -76,7 +60,6 @@ void Scene::update(float deltaTime)
 
 	m_time += deltaTime;
 	m_camera->transform().setPosition(vec3(0, 0, 0));
-	//m_camera->transform().rotate(vec3(0, 1, 0), deltaTime);
 }
 
 void Scene::render() const

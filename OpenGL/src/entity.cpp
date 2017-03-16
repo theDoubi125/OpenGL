@@ -172,11 +172,24 @@ void Entity::init(json descr)
 	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
 	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
 	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
-	for(json::iterator it = descr.begin(); it != descr.end(); ++it)
+	json components = descr["Components"];
+	std::cout << "Test : " << descr["Transform"]["x"].get<int>() << std::endl;
+	for (json::iterator descrIt = descr.begin(); descrIt != descr.end(); ++descrIt)
 	{
-		Component* component = Component::createComponent(it.key(), this);
-		component->init(it.value());
-		m_components.push_back(component);
+		if (descrIt.key().compare("Components") == 0)
+		{
+			for(json::iterator it = components.begin(); it != components.end(); ++it)
+			{
+				std::cout << *it << std::endl;
+				Component* component = Component::createComponent(it.key(), this);
+				component->init(it.value());
+				m_components.push_back(component);
+			}
+		}
+		else if (descrIt.key().compare("Transform") == 0)
+		{
+			transform().setPosition(vec3((*descrIt)["x"].get<float>(), (*descrIt)["y"].get<float>(), (*descrIt)["z"].get<float>()));
+		}
 	}
 	if(m_mesh != NULL)
 		m_mesh->init(descr);
