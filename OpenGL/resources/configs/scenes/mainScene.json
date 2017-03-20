@@ -24,7 +24,19 @@
         }
       },
       "StateMachine": {
-        
+
+      }
+    }
+  },
+  "World": {
+    "Transform": {
+      "x": 0,
+      "y": 0,
+      "z": -10
+    },
+    "Components": {
+      "World": {
+        "dim": [ 10, 10, 10 ]
       }
     }
   }

@@ -15,18 +15,21 @@ enum CellType
 };
 
 class WorldMesh;
-class World : public Entity
+class World : public Component
 {
 public:
-	World(Scene* scene, ivec3 dim);
+	World(Entity* entity);
 	~World();
 
 	void setCell(ivec3 pos, CellType cell);
 	const CellType getCell(ivec3 pos) const;
 
 	virtual void init(json descr) override;
+	virtual void start() override;
 	virtual void update(float deltaTime) override;
 	virtual void render() const override;
+	virtual Component* createInstance(Entity* entity) const override;
+	virtual inline std::string name() const override { return "World"; };
 
 	std::vector<ivec3> getOccurences(CellType cellType) const;
 

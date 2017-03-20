@@ -1,3 +1,9 @@
-﻿  mesh.cpp
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.exe
-  OpenGL.vcxproj -> G:\Documents\Julien\Projets\C++\OpenGL\Debug\OpenGL.pdb (Partial PDB)
+﻿  world.cpp
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\world.cpp(157): warning C4018: '<': signed/unsigned mismatch
+c:\users\jrevel\documents\visual studio 2015\projects\opengl\opengl\src\world.cpp(172): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  scene.cpp
+  component.cpp
+  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.exe
+  OpenGL.vcxproj -> C:\Users\jrevel\documents\visual studio 2015\Projects\OpenGL\Debug\OpenGL.pdb (Partial PDB)
