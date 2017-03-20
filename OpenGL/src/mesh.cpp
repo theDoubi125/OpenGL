@@ -4,9 +4,13 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <SOIL.h>
+#include <glm\gtc\type_ptr.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include "shader.h"
 #include "mesh.h"
+#include "entity.h"
 
 #ifndef BUFFER_OFFSET
 #define BUFFER_OFFSET(offset) ((char*)NULL + (offset))
@@ -116,18 +120,25 @@ float* CubeMesh::getTexCoords() const
 	return m_textCoords;
 }
 
-MeshRenderer::MeshRenderer(Entity* entity) : Component(entity)
+MeshRenderer::MeshRenderer(Entity* entity) : Component(entity), m_shader(NULL), m_textureParams(NULL), m_textures(NULL), m_textureCount(0)
 {
 
 }
 
 MeshRenderer::~MeshRenderer()
 {
-
+	delete[] m_textures;
+	delete[] m_textureParams;
 }
 
 void MeshRenderer::init(json descr)
 {
+	json shaderDescr = descr["Shader"];
+	m_shader = new Shader(shaderDescr["Vertex"], shaderDescr["Fragment"]);
+	m_shader->load();
+	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
+	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
+	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
 	m_mesh = Mesh::getRegisteredMesh(descr["Mesh"]);
 	m_mesh->init(descr);
 
@@ -138,6 +149,35 @@ void MeshRenderer::init(json descr)
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
+
+	m_texture2 = SOIL_load_OGL_texture
+	(
+		"resources/img/rock.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
+	json texturesDescr = shaderDescr["Textures"];
+	m_textureCount = texturesDescr.size();
+	m_textureParams = new std::string[m_textureCount];
+	m_textures = new GLuint[m_textureCount];
+
+	for (int i = 0; i < m_textureCount; i++)
+	{
+		json textureDescr = texturesDescr[i];
+		const std::string param = textureDescr["Param"];
+		const std::string path = textureDescr["Path"];
+		std::cout << param << std::endl;
+		m_textureParams[i] = param;
+		m_textures[i] = SOIL_load_OGL_texture
+		(
+			path.c_str(),
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		);
+	}
 }
 
 void MeshRenderer::start()
@@ -152,9 +192,28 @@ void MeshRenderer::update(float deltaTime)
 
 void MeshRenderer::render() const
 {
-	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glEnable(GL_DEPTH_TEST);
+	glUseProgram(m_shader->getProgramId());
+	glUniformMatrix4fv(m_modelMatrixId, 1, GL_FALSE, glm::value_ptr(m_entity->transform().getGlobalMatrix()));
+	glm::mat4 viewMatrix = m_entity->scene().viewMatrix();
+	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(m_projMatrixId, 1, GL_FALSE, glm::value_ptr(m_entity->scene().projectionMatrix()));
+
+	for (int i = 0; i < m_textureCount; i++)
+	{
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glUniform1i(glGetUniformLocation(m_shader->getProgramId(), m_textureParams[i].c_str()), i);
+	}
+	//glUniform1i(glGetUniformLocation(m_shader->getProgramId(), "text2"), 1);
+	
+	for (int i = 0; i < m_textureCount; i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, m_textures[i]);
+	}
+
 	m_mesh->render();
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 Component* MeshRenderer::createInstance(Entity* entity) const

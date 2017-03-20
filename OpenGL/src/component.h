@@ -7,6 +7,13 @@ using json = nlohmann::json;
 
 class Entity;
 
+enum ComponentType
+{
+	MESH_RENDERER = 0,
+	STATE_MACHINE = 1,
+	CUBE = 2
+};
+
 class Component
 {
 public:
@@ -22,6 +29,8 @@ public:
 
 	static void registerComponents();
 
+	virtual std::string name() const = 0;
+
 protected:
 	Entity* m_entity;
 
@@ -29,6 +38,10 @@ protected:
 
 private:
 	static std::map<std::string, Component*> m_componentModels;
+};
+
+class ComponentFactory
+{
 };
 
 #endif COMPONENT_INCLUDED

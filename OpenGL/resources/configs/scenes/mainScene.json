@@ -3,11 +3,28 @@
     "Transform": {
       "x": 0,
       "y": 0,
-      "z": 0
+      "z": -10
     },
     "Components": {
       "MeshRenderer": {
-        "Mesh": "Cube"
+        "Mesh": "Cube",
+        "Shader": {
+          "Vertex": "resources/shaders/shader_base.vert",
+          "Fragment": "resources/shaders/shader_base.frag",
+          "Textures": [
+            {
+              "Path": "resources/img/rock.png",
+              "Param": "text1"
+            },
+            {
+              "Path": "resources/img/grass.png",
+              "Param": "text2"
+            }
+          ]
+        }
+      },
+      "StateMachine": {
+        
       }
     }
   }

@@ -151,36 +151,30 @@ void Transform::scale(const vec3 &v)
 	m_localScale *= v;
 }
 
-Entity::Entity(const Scene *scene) : m_scene(scene), m_shader(new Shader("resources/shaders/shader_base.vert", "resources/shaders/shader_base.frag"))
+Entity::Entity(const Scene *scene) : m_scene(scene)
 {
 
 }
 
-Entity::Entity(const Entity& entity) : m_transform(entity.m_transform), m_scene(entity.m_scene), m_shader(new Shader(*entity.m_shader))
+Entity::Entity(const Entity& entity) : m_transform(entity.m_transform), m_scene(entity.m_scene)
 {
 
 }
 
 Entity::~Entity()
 {
-	delete m_shader;
+
 }
 
 void Entity::init(json descr)
 {
-	m_shader->load();
-	m_modelMatrixId = glGetUniformLocation(m_shader->getProgramId(), "modelMatrix");
-	m_viewMatrixId = glGetUniformLocation(m_shader->getProgramId(), "viewMatrix");
-	m_projMatrixId = glGetUniformLocation(m_shader->getProgramId(), "projectionMatrix");
 	json components = descr["Components"];
-	std::cout << "Test : " << descr["Transform"]["x"].get<int>() << std::endl;
 	for (json::iterator descrIt = descr.begin(); descrIt != descr.end(); ++descrIt)
 	{
 		if (descrIt.key().compare("Components") == 0)
 		{
 			for(json::iterator it = components.begin(); it != components.end(); ++it)
 			{
-				std::cout << *it << std::endl;
 				Component* component = Component::createComponent(it.key(), this);
 				component->init(it.value());
 				m_components.push_back(component);
@@ -191,8 +185,24 @@ void Entity::init(json descr)
 			transform().setPosition(vec3((*descrIt)["x"].get<float>(), (*descrIt)["y"].get<float>(), (*descrIt)["z"].get<float>()));
 		}
 	}
-	if(m_mesh != NULL)
-		m_mesh->init(descr);
+}
+
+void Entity::addComponent(Component* component)
+{
+	m_components.push_back(component);
+	m_componentsPerName[component->name()].push_back(component);
+}
+
+Component* Entity::getComponent(std::string name) const
+{
+	if (m_componentsPerName.count(name) > 0 && m_componentsPerName.at(name).size() > 0)
+		return m_componentsPerName.at(name)[0];
+	return NULL;
+}
+
+std::vector<Component*> Entity::getComponents(std::string name) const
+{
+	return m_componentsPerName.at(name);
 }
 
 void Entity::start()
@@ -203,8 +213,6 @@ void Entity::start()
 
 void Entity::render() const
 {
-	//if (m_mesh != NULL)
-	//	m_mesh->render();
 	for (int i = 0; i < m_components.size(); i++)
 		m_components[i]->render();
 }
@@ -212,7 +220,6 @@ void Entity::render() const
 void Entity::preRender() const
 {
 	glEnable(GL_DEPTH_TEST);
-	glUseProgram(m_shader->getProgramId());
 	glUniformMatrix4fv(m_modelMatrixId, 1, GL_FALSE, glm::value_ptr(transform().getGlobalMatrix()));
 	mat4 viewMatrix = scene().viewMatrix();
 	glUniformMatrix4fv(m_viewMatrixId, 1, GL_FALSE, glm::value_ptr(viewMatrix));
@@ -251,7 +258,3 @@ const Scene& Entity::scene() const
 	return *m_scene;
 }
 
-void Entity::setMesh(Mesh *mesh)
-{
-	m_mesh = mesh;
-}

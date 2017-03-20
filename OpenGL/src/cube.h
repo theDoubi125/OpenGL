@@ -3,49 +3,20 @@
 
 #include <stack>
 #include "entity.h"
-class StateMachine;
+
 class CubeBehaviour;
-class Cube : public Entity
+class StateMachine : public Component
 {
 public:
-	Cube(const Scene* scene);
-	Cube(const Cube &model);
-	~Cube();
-
-	virtual void init(json descr) override;
-	virtual void render() const override;
-	virtual void update(float deltaTime) override;
-	void setBehaviour(CubeBehaviour *behaviour);
-
-private:
-	float m_time;
-	GLuint m_texture;
-	glm::ivec2 m_movingDir;
-	StateMachine *m_stateMachine;
-};
-
-class CubeComponent : public Component
-{
-public:
-	CubeComponent(Entity* entity);
-	~CubeComponent();
+	StateMachine(Entity* entity);
+	~StateMachine();
 
 	virtual void init(json descr) override;
 	virtual void start() override;
 	virtual void update(float deltaTime) override;
 	virtual void render() const override;
 	virtual Component* createInstance(Entity* entity) const override;
-
-private:
-	StateMachine *m_stateMachine;
-};
-
-class CubeBehaviour;
-class StateMachine
-{
-public:
-	StateMachine(Cube &cube, CubeBehaviour* initState);
-	~StateMachine();
+	virtual std::string name() const override;
 
 	void pushState(CubeBehaviour* state);
 	void popState();
@@ -53,12 +24,9 @@ public:
 
 	CubeBehaviour& currentState() const;
 
-	void update(float deltaTime);
-
 	Transform& transform();
 
 private:
-	Cube& m_cube;
 	std::stack<CubeBehaviour*> m_states;
 };
 

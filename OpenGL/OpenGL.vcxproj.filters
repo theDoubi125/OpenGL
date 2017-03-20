@@ -29,6 +29,9 @@
     <Filter Include="src\util\input">
       <UniqueIdentifier>{70662f25-2cf2-4c49-8efb-b8a2783d8350}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{a200855f-b071-4e91-8f7a-a820214b1406}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -86,6 +89,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\configs\scenes\mainScene.json" />
+    <None Include="resources\configs\scenes\mainScene.json">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="resources\shaders\shader_base.frag">
+      <Filter>resources</Filter>
+    </None>
+    <None Include="resources\shaders\shader_base.vert">
+      <Filter>resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

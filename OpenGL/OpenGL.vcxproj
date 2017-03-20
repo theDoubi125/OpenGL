@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\configs\scenes\mainScene.json" />
+    <None Include="resources\shaders\shader_base.frag" />
+    <None Include="resources\shaders\shader_base.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{099C103F-8B38-4662-BE48-7B4FCE077F6A}</ProjectGuid>

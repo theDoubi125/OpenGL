@@ -38,10 +38,17 @@ public:
 	virtual void update(float deltaTime) override;
 	virtual void render() const override;
 	virtual Component* createInstance(Entity* entity) const override;
+	virtual inline std::string name() const override { return "MeshRenderer"; }
 
 private:
 	Mesh* m_mesh;
-	GLuint m_texture;
+	GLuint m_texture, m_texture2;
+	Shader* m_shader;
+	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
+
+	GLuint *m_textures;
+	std::string *m_textureParams;
+	int m_textureCount;
 };
 
 class CubeMesh : public Mesh

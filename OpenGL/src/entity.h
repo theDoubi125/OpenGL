@@ -81,19 +81,21 @@ public:
 
 	virtual bool isAlive() const;
 
-	void setMesh(Mesh *mesh);
+	void addComponent(Component* component);
 
-protected:
+	Component* getComponent(std::string name) const;
+	std::vector<Component*> getComponents(std::string name) const;
+
 	const Scene& scene() const;
 
 private:
 	Transform m_transform;
 	const Scene* m_scene;
 	Shader* m_shader;
-	Mesh* m_mesh;
 	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
 
 	std::vector<Component*> m_components;
+	std::map<std::string, std::vector<Component*> > m_componentsPerName;
 };
 
 #endif

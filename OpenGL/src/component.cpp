@@ -7,6 +7,7 @@
 
 #include "component.h"
 #include "mesh.h"
+#include "cube.h"
 
 std::map<std::string, Component*> Component::m_componentModels;
 
@@ -37,4 +38,5 @@ Component* Component::createComponent(std::string name, Entity* entity)
 void Component::registerComponents()
 {
 	registerComponent("MeshRenderer", new MeshRenderer(NULL));
+	registerComponent("StateMachine", new StateMachine(NULL));
 }

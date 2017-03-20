@@ -42,13 +42,10 @@ void Scene::init(json desc)
 {
 	glEnable(GL_TEXTURE_2D);
 
-	std::cout << to_string(m_camera->projectionMatrix()) << std::endl;
-
 	for (json::iterator it = desc.begin(); it != desc.end(); it++)
 	{
 		Entity* entity = new Entity(this);
 		entity->init(*it);
-		entity->transform().translate(vec3(0, 0, -10));
 		m_entities.push_back(entity);
 	}
 }
