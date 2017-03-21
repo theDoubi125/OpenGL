@@ -142,22 +142,6 @@ void MeshRenderer::init(json descr)
 	m_mesh = Mesh::getRegisteredMesh(descr["Mesh"]);
 	m_mesh->init(descr);
 
-	m_texture = SOIL_load_OGL_texture
-	(
-		"resources/img/box.png",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-
-	m_texture2 = SOIL_load_OGL_texture
-	(
-		"resources/img/rock.png",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-
 	json texturesDescr = shaderDescr["Textures"];
 	m_textureCount = texturesDescr.size();
 	m_textureParams = new std::string[m_textureCount];

@@ -12,10 +12,8 @@
 #include "world.h"
 #include "mesh.h"
 
-World::World(Scene* scene, ivec3 dim) : Entity(scene), m_dim(dim), m_cells(new CellType[dim.x * dim.y * dim.z])
+World::World(Entity* entity) : Component(entity), m_cells(NULL)
 {
-	for (int i = 0; i < dim.x * dim.y * dim.z; i++)
-		m_cells[i] = CELL_AIR;
 	m_occurences = new std::vector<ivec3>[CELL_LAST];
 	m_cellMeshes = new Mesh*[CELL_LAST];
 	for (int i = CELL_AIR+1; i < CELL_LAST; i++)
@@ -64,7 +62,10 @@ int World::posToId(ivec3 pos) const
 
 void World::init(json descr)
 {
-	Entity::init(json());
+	m_dim = vec3(descr["dim"][0], descr["dim"][1], descr["dim"][2]);
+	m_cells = new CellType[m_dim.x * m_dim.y * m_dim.z];
+	for (int i = 0; i < m_dim.x * m_dim.y * m_dim.z; i++)
+		m_cells[i] = CELL_AIR;
 	for (int i = 1; i < CELL_LAST; i++)
 	{
 		m_cellMeshes[i]->init(descr);
@@ -82,22 +83,32 @@ void World::init(json descr)
 	}
 }
 
+void World::start()
+{
+
+}
+
 void World::update(float deltaTime)
 {
-	Entity::update(deltaTime);
+
 }
 
 void World::render() const
 {
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	//Entity::render();
 	for (int i = 1; i < CELL_LAST; i++)
 	{
 		m_cellMeshes[i]->render();
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+Component* World::createInstance(Entity* entity) const
+{
+	return new World(entity);
+}
+
 
 std::vector<ivec3> World::getOccurences(CellType cellType) const
 {

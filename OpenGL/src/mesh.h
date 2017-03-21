@@ -38,11 +38,10 @@ public:
 	virtual void update(float deltaTime) override;
 	virtual void render() const override;
 	virtual Component* createInstance(Entity* entity) const override;
-	virtual inline std::string name() const override { return "MeshRenderer"; }
+	virtual inline std::string name() const override { return "World"; }
 
 private:
 	Mesh* m_mesh;
-	GLuint m_texture, m_texture2;
 	Shader* m_shader;
 	GLuint m_modelMatrixId, m_viewMatrixId, m_projMatrixId;
 

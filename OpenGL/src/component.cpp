@@ -8,6 +8,7 @@
 #include "component.h"
 #include "mesh.h"
 #include "cube.h"
+#include "world.h"
 
 std::map<std::string, Component*> Component::m_componentModels;
 
@@ -39,4 +40,5 @@ void Component::registerComponents()
 {
 	registerComponent("MeshRenderer", new MeshRenderer(NULL));
 	registerComponent("StateMachine", new StateMachine(NULL));
+	registerComponent("World", new World(NULL));
 }
